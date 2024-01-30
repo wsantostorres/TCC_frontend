@@ -1,0 +1,136 @@
+.card_vacancy{
+    width: 22rem;
+    color: #353535;
+}
+
+.card_vacancy small{
+    display: block;
+}
+
+.content_tinymce{
+    font-size: 14px;
+}
+
+.btn_group{
+    display: flex;
+    gap: 16px;
+    justify-content: flex-start;
+    align-items: center;
+    bottom: 0;
+}
+
+.buttonSendResume{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    color: #fff;
+    background-color: #127822;
+    border: 1px solid #127822;
+    border-radius: 24px;
+    transition: .5s;
+    padding: 8px;
+}
+
+.buttonSendResume:hover{
+    background-color: #0F5739;
+    border: 1px solid #0F5739;
+}
+
+.resumeSent{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    color: #fff;
+    background-color: #0F5739;
+    border: 1px solid #0F5739;
+    border-radius: 24px;
+    transition: .5s;
+    padding: 8px;
+}
+
+.linkEditVacancy{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    color: #353535;
+    background-color: #fff;
+    border: 1px solid #353535;
+    border-radius: 24px;
+    transition: .5s;
+    padding: 8px;
+}
+
+.linkEditVacancy:hover{
+    background-color: #353535;
+    color: #fff;
+}
+
+.buttonDownloadResumes{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    color: #fff;
+    background-color: #127822;
+    border: 1px solid #127822;
+    border-radius: 24px;
+    transition: .5s;
+    padding: 8px;
+}
+
+.buttonDownloadResumes:hover{
+    background-color: #0F5739;
+    border: 1px solid #0F5739;
+}
+
+.buttonCloseModal{
+    color: #353535;
+    background-color: #fff;
+    border: 1px solid #353535;
+    border-radius: 4px;
+    min-width: 200px;
+    transition: .5s;
+}
+
+.buttonCloseModal:hover{
+    color: #fff;
+    background-color: #353535;
+    border: 1px solid #353535;
+    border-radius: 4px;
+    min-width: 200px;
+}
+
+.buttonCloseModalDisabled{
+    color: #fff;
+    background-color: #d1d1d1;
+    border: 1px solid #d1d1d1;
+    border-radius: 4px;
+    min-width: 200px;
+}  
+
+@media(max-width: 1200px){
+    .card_vacancy{
+        width: 100%;
+    }
+}
+
+@media(max-width: 400px){
+    .linkEditVacancy{
+        padding: 10px 30px;
+    }
+    
+    .buttonDownloadResumes{
+        padding: 10px 30px;
+    }
+    
+    .linkEditVacancy span{
+        display: none;
+    }
+    
+    .buttonDownloadResumes span{
+        display: none;
+    }
+}

@@ -1,0 +1,141 @@
+/* styles */
+.postContainer{
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+.postContainer > form{
+    background-color: #fff;
+    max-width: 992px;
+    margin: 0 auto;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, .15);
+}
+
+.postContainer > form h4{
+    margin: 0;
+    font-weight: 700;
+}
+
+.postContainer .pageTitleStyle{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgb(53,53,53);
+    background: linear-gradient(45deg, rgba(53,53,53,1) 0%, rgba(122,122,122,1) 56%);
+    color: #fff;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    margin: 0;
+}
+
+.postContainer .pageTitleStyle a{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    color: #545454;
+    border-radius: 24px;
+    font-size: 1.2em;
+    padding: 10px;
+    box-shadow: 0px 3px 8px rgba(0,0,0, .15);
+}
+
+.containerTitleDate{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    width: 100%;
+}
+
+.containerTitleDate > div:first-child{
+    width: calc(100% - 190.64px);
+}
+
+.available > p{
+    margin-bottom: 0px;
+}
+
+.available > div{
+    border: 1px solid #dedede;
+    border-radius: 4px;
+    padding: 10px 16px;
+}
+
+.courses{
+    margin-bottom: 0px;
+}
+
+.courses > p{
+    margin-bottom: 0px;
+}
+
+.courses > div{
+    border: 1px solid #dedede;
+    border-radius: 4px;
+    padding: 10px 16px;
+}
+
+.buttonsFormPost{
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 24px;
+    margin-bottom: 0;
+}
+
+.buttonDelete{
+    padding: 10px 30px;
+    background-color: #bb7526;
+    border-color: #bb7526;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    transition: .5s ease-in-out;
+    margin-right: 18px;
+}
+
+.buttonDelete:hover{
+    background-color: #a5661d;
+    border-color: #a5661d;
+}
+
+.buttonSave{
+    padding: 10px 30px;
+    background-color: #127822;
+    border-color: #127822;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    transition: .5s ease-in-out;
+}
+
+.buttonSave:hover{
+    background-color: #0F5739;
+    border-color: #0F5739;
+}
+
+.buttonSave > svg{
+    font-size: 18px;
+}
+
+
+/* responsive */
+@media(max-width: 768px){
+    .containerTitleDate > div{
+        width: 100% !important;
+    }
+}
+
+@media(max-width: 600px){
+
+    .postContainer > form{
+        padding: 1rem;
+    }
+    
+}

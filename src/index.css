@@ -1,0 +1,24 @@
+html, body {
+  height: 100%;
+  font-family: 'Open Sans', sans-serif;
+  box-sizing: border-box;
+  background-color: #EEEEEE;
+}
+
+a{
+  text-decoration: none;
+}
+
+label{
+  display: block;
+}
+
+button, input{
+  border-radius: 4px;
+  border: 1px solid #777;
+  padding: 0.625em;
+}
+
+form > div {
+  margin: 1.125em 0;
+}

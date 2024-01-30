@@ -1,0 +1,110 @@
+/* styles */
+.profileContainer{
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+.profileContainer > form{
+    background-color: #fff;
+    max-width: 992px;
+    margin: 0 auto;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, .15);
+}
+
+.profileContainer > form h4{
+    margin: 0;
+    font-weight: 700;
+}
+
+.profileContainer .pageTitleStyle{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgb(53,53,53);
+    background: linear-gradient(45deg, rgba(53,53,53,1) 0%, rgba(122,122,122,1) 56%);
+    color: #fff;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    margin: 0;
+}
+
+.profileContainer .pageTitleStyle a{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    color: #545454;
+    border-radius: 24px;
+    font-size: 1.2em;
+    padding: 10px;
+    box-shadow: 0px 3px 8px rgba(0,0,0, .15);
+}
+
+.profileContainer > form h5{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.profileContainer > form h5 > span{
+    width: 34px;
+    height: 34px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #353535;
+    border-radius: 24px;
+}
+
+.addButtons {
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    transition: .5s ease-in-out;
+}
+
+.addButtons > svg{
+    font-size: 20px;
+}
+
+.buttonsFormPost{
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 24px;
+    margin-bottom: 0;
+}
+
+.buttonSave{
+    padding: 10px 30px;
+    background-color: #0F5739;
+    color: white;
+    border-color: #0F5739;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    transition: .5s ease-in-out;
+}
+
+.buttonSave:hover{
+    background-color: #127822;
+    border-color: #127822;
+}
+
+.buttonSave > svg{
+    font-size: 18px;
+}
+
+/* responsive */
+@media(max-width: 600px){
+
+    .profileContainer > form{
+        padding: 1rem;
+    }
+    
+}
