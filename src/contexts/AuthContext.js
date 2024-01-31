@@ -147,7 +147,7 @@ export const AuthContextProvider = ({children}) => {
                     setStudentVacancies(dataUserSIMT.vacanciesIds);
                 }
               }else{
-                throw error;
+                throw new Error("Erro ao verificar o token");
               }
           
             } catch (error) {
