@@ -1,5 +1,5 @@
 export const apiSimt = () => {
-  const urlSIMT = "http://localhost:3000/api";
+  const urlSIMT = "https://tcc-frontend-delta.vercel.app/api";
   return urlSIMT;
 }
 
