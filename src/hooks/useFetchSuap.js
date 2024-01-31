@@ -43,39 +43,46 @@ export const useFetchSuap = () => {
     }, [url])
     
     const verifyToken = useCallback(async (tokenToVerify) => {
-        if(tokenToVerify){
-          const data = {
-              "token":tokenToVerify
-          }
-    
-          const response = await fetch(`${url}/api/v2/autenticacao/token/verify/`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data)
-          })
-    
-          const status = await response.status;
-          return status;
+        const data = {
+            "token":tokenToVerify
+        }
+
+        try {
+            const response = await fetch(`${url}/api/v2/autenticacao/token/verify/`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data)
+            });
+
+            const status = await response.status;
+            return status;
+
+        } catch (error) {
+            throw error;
         }
     }, [url])
     
     const refreshToken = useCallback(async (tokenRefresh) => {
-        if(tokenRefresh){
-          const data = {
-              "refresh":tokenRefresh
-          }
-    
-          const response = await fetch(`${url}/api/v2/autenticacao/token/refresh/`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data)
-          })
-    
-          return response;
+        const data = {
+            "refresh":tokenRefresh
+        }
+
+        try {
+            
+            const response = await fetch(`${url}/api/v2/autenticacao/token/refresh/`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data)
+            })
+
+            return response;
+
+        } catch (error) {
+            throw error;
         }
     }, [url])
 

@@ -21,7 +21,7 @@ const Resume = () => {
 
   document.title = "Meu Currículo";
   const { postResume, putResume, getResume, downloadResumePDF, resumeLoading } = useFetchResumes();
-  const { id:studentId, resumeId, tokenSimt:authorization } = useAuth();
+  const { id:studentId, resumeId} = useAuth();
   const { resumeMessage, setResumeMessage } = useMessage();
 
   // state
@@ -59,7 +59,7 @@ const Resume = () => {
   useEffect(() => {
     (async () => {
       if(resumeId){
-        const resumeData = await getResume(authorization, studentId, resumeId);
+        const resumeData = await getResume(studentId, resumeId);
 
         if(resumeData !== null){
           setResume(resumeData)
@@ -72,7 +72,7 @@ const Resume = () => {
       
       }
     })()
-  }, [studentId, resumeId, getResume, modified, authorization])
+  }, [studentId, resumeId, getResume, modified])
 
   useEffect(() => {
     if (resumeMessage.type === "error") {
@@ -109,10 +109,10 @@ const Resume = () => {
     resume.projects = projects;
     resume.experiences = experiences;
     if(resumeId !== null && resumeId !== undefined){
-      await putResume(authorization, studentId, resumeId, resume)
+      await putResume(studentId, resumeId, resume)
       setModified(true)
     }else{
-      await postResume(authorization, studentId, resume)
+      await postResume(studentId, resume)
       setModified(true)
     }
   }
@@ -518,7 +518,7 @@ const Resume = () => {
         </div>
 
         <div className="d-flex justify-content-end mt-5 gap-3">
-          <button id="btn-download-my-resume" className="btn btn-warning px-3" onClick={async() => { await downloadResumePDF(authorization, studentId, resumeId) }} ><FiDownloadCloud/><span></span></button>
+          <button id="btn-download-my-resume" className="btn btn-warning px-3" onClick={async() => { await downloadResumePDF(studentId, resumeId) }} ><FiDownloadCloud/><span></span></button>
           <button id="btn-save-resume" type="submit" className={styles.buttonSave}><LuSave /> Salvar</button>
         </div>
       </form>

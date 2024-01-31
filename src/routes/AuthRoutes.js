@@ -1,11 +1,10 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 
 import HomeStudent from '../pages/Home/HomeStudent';
 import HomeServer from '../pages/Home/HomeServer';
 import Resume from '../pages/Resume/Resume';
 import Post from "../pages/Post/Post";
-import Error from "../pages/Error/Error";
 
 const AuthRoutes = () => {
 
@@ -17,7 +16,6 @@ const AuthRoutes = () => {
           <>
             <Route path="/" element={<HomeStudent />} />
             <Route path="/curriculo" element={<Resume />} />
-            <Route path="*" element={<Error />} />
           </>
         )}
         {bondType === "Servidor" && (
@@ -25,9 +23,9 @@ const AuthRoutes = () => {
             <Route path="/" element={<HomeServer />} />
             <Route path="/publicacao" element={<Post />} />
             <Route path="/publicacao/:id" element={<Post />} />
-            <Route path="*" element={<Error />} />
           </>
         )}
+        <Route path="*" element={<Navigate to="/" />} />
     </Routes>
   )
 }

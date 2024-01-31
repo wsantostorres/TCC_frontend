@@ -1,5 +1,5 @@
 export const apiSimt = () => {
-  const urlSIMT = "http://localhost:8080";
+  const urlSIMT = "http://localhost:3000/api";
   return urlSIMT;
 }
 

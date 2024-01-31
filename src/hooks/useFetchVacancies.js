@@ -19,7 +19,7 @@ export const useFetchVacancies = () => {
   
   const url = apiSimt();
 
-  const searchVacancies = useCallback(async (authorization, search, course, bondType) => {
+  const searchVacancies = useCallback(async (search, course, bondType) => {
     setVacancyLoading(true)
 
     let urlToFetch = `${url}/vacancies/search?title=${search}`;
@@ -31,7 +31,6 @@ export const useFetchVacancies = () => {
     return fetch(urlToFetch, {
       method: "GET",
       headers: {
-        "Authorization": `Baerer ${authorization}`,
         'bondType': `${bondType}`,
         'Content-Type': "application/json"
       }
@@ -49,7 +48,7 @@ export const useFetchVacancies = () => {
     })
   } , [url, setVacancyMessage])
   
-  const getAllVacancies = useCallback(async (authorization, course, bondType) => {
+  const getAllVacancies = useCallback(async (course, bondType) => {
     setVacancyLoading(true);
     let urlToFetch = `${url}/vacancies`;
   
@@ -60,7 +59,6 @@ export const useFetchVacancies = () => {
     return fetch(urlToFetch, {
       method: "GET",
       headers: {
-        "Authorization": `Baerer ${authorization}`,
         'bondType': `${bondType}`,
         'Content-Type': 'application/json',
       }
@@ -84,13 +82,12 @@ export const useFetchVacancies = () => {
   
   }, [url, setVacancyMessage]);
 
-  const getVacancy = useCallback( async(authorization, id) => {
+  const getVacancy = useCallback( async(id) => {
     setVacancyLoading(true);
   
     return fetch(`${url}/vacancies/${id}`, {
       method: "GET",
       headers: {
-        "Authorization": `Baerer ${authorization}`,
         'Content-Type': 'application/json'
       }
     })
@@ -113,13 +110,12 @@ export const useFetchVacancies = () => {
 
   }, [url, setVacancyMessage]);
 
-  const postVacancy = async(authorization, data) => {
+  const postVacancy = async(data) => {
     setVacancyLoading(true);
   
     return fetch(`${url}/vacancies`, {
       method: "POST",
       headers: {
-        "Authorization": `Baerer ${authorization}`,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(data)
@@ -143,13 +139,12 @@ export const useFetchVacancies = () => {
     });
   };
   
-  const putVacancy = async(authorization, data, id) => {
+  const putVacancy = async(data, id) => {
     setVacancyLoading(true);
   
     return fetch(`${url}/vacancies/${id}`, {
       method: "PUT",
       headers: {
-        "Authorization": `Baerer ${authorization}`,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(data)
@@ -169,14 +164,14 @@ export const useFetchVacancies = () => {
     });
   };
   
-  const deleteVacancy = async (authorization, id) => {
+  const deleteVacancy = async (id) => {
     setVacancyLoading(true);
   
     try {
       await fetch(`${url}/vacancies/${id}`, {
         method: "DELETE",
         headers: {
-          "Authorization": `Baerer ${authorization}`,
+
           'Content-Type': 'application/json'
         }
       });
@@ -191,12 +186,11 @@ export const useFetchVacancies = () => {
     setVacancyLoading(false);
   };
 
-  const sendResumeToVacancy = async(authorization, studentId, vacancyId) => {
+  const sendResumeToVacancy = async(studentId, vacancyId) => {
     setVacancyLoading(true);
     return fetch(`${url}/vacancies/send-resume/${studentId}/${vacancyId}`, {
       method: "POST",
       headers: {
-        "Authorization": `Baerer ${authorization}`,
       }
     }
     )
@@ -226,12 +220,12 @@ export const useFetchVacancies = () => {
     })
   }
 
-  const downloadResumes = async(authorization, id, vacancyTitle) => {
+  const downloadResumes = async(id, vacancyTitle) => {
     setVacancyLoading(true)
     return fetch(`${url}/vacancies/download-resumes/${id}`, {
         method: 'GET',
         headers: {
-          "Authorization": `Baerer ${authorization}`,
+
         },
         responseType: 'arraybuffer',
     }).then(async (response) => {

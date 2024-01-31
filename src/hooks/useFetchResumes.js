@@ -16,13 +16,12 @@ export const useFetchResumes = () => {
     // states
     const [resumeLoading, setResumeLoading] = useState(false);
 
-    const getResume = useCallback( async(authorization, studentId, id) => {
+    const getResume = useCallback( async(studentId, id) => {
       setResumeLoading(true);
     
         return fetch(`${url}/resumes/${studentId}/${id}`, {
           method: "GET",
           headers: {
-            "Authorization": `Baerer ${authorization}`,
             'Content-Type': 'application/json'
           }
         })
@@ -46,13 +45,12 @@ export const useFetchResumes = () => {
   
     }, [url, setResumeMessage]);
 
-    const postResume = async(authorization, studentId, data) => {
+    const postResume = async(studentId, data) => {
       setResumeLoading(true);
     
       return fetch(`${url}/resumes/${studentId}`, {
         method: "POST",
-        headers: {
-          "Authorization": `Baerer ${authorization}`,
+        headers: { 
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(data)
@@ -76,13 +74,12 @@ export const useFetchResumes = () => {
       });
     };
 
-    const putResume = async(authorization, studentId, resumeId, data) => {
+    const putResume = async(studentId, resumeId, data) => {
       setResumeLoading(true);
     
       return fetch(`${url}/resumes/${studentId}/${resumeId}`, {
         method: "PUT",
         headers: {
-          "Authorization": `Baerer ${authorization}`,
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(data)
@@ -102,13 +99,10 @@ export const useFetchResumes = () => {
       });
     };
 
-    const downloadResumePDF = async(authorization, studentId, resumeId) => {
+    const downloadResumePDF = async(studentId, resumeId) => {
       setResumeLoading(true);
       return fetch(`${url}/resumes/download/${studentId}/${resumeId}`, {
           method: 'GET',
-          headers: {
-            "Authorization": `Baerer ${authorization}`,
-          },
           responseType: 'arraybuffer',
       }).then(async (response) => {
         if(response.status === 200){

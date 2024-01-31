@@ -10,12 +10,11 @@ export const useFetchCourses = () => {
     const { setCourseMessage } = useMessage();
     const [courseLoading, setCourseLoading] = useState(false);
 
-    const getCourses = useCallback(async(authorization) => {
+    const getCourses = useCallback(async() => {
       setCourseLoading(true)
         return fetch(`${url}/courses`, {
           method: "GET",
           headers: {
-            "Authorization": `Baerer ${authorization}`,
             'Content-Type': 'application/json',
           }
         })

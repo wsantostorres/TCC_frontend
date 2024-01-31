@@ -18,7 +18,7 @@ const HomeServer = () => {
     document.title = "Home";
 
     const { vacancyMessage, setVacancyMessage } = useMessage();
-    const { bondType, logout, name, tokenSimt:authorization } = useAuth()
+    const { bondType, logout, name } = useAuth()
     const { searchVacancies, getAllVacancies, vacancyLoading } = useFetchVacancies();
 
     const [vacancies, setVacancies] = useState(null);
@@ -28,12 +28,12 @@ const HomeServer = () => {
 
     useEffect(() => {
         (async () => {
-            const allVacancies = await getAllVacancies(authorization, null, bondType);
+            const allVacancies = await getAllVacancies(null, bondType);
             setVacancies(allVacancies)
             setSearchText("")
             setErrorMessage("")
         })()
-    }, [getAllVacancies, bondType, authorization])
+    }, [getAllVacancies, bondType])
 
     useEffect(() => {
         if (vacancyMessage.type === "error") {
@@ -44,7 +44,7 @@ const HomeServer = () => {
 
     const handleSearch = async(e) => {
         e.preventDefault();
-        const searchResults = await searchVacancies(authorization, search, null, bondType);
+        const searchResults = await searchVacancies(search, null, bondType);
         setVacancies(searchResults)
         setSearchText(search)
     }

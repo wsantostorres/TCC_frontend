@@ -17,15 +17,12 @@ import styles from './Post.module.css';
 import { LuSave } from 'react-icons/lu';
 import { BsTrash } from 'react-icons/bs';
 import { IoMdArrowRoundBack } from 'react-icons/io'
-import { useAuth } from "../../contexts/AuthContext";
 
 const Post = () => {
   const { id } = useParams();
   const { vacancyMessage, setVacancyMessage, courseMessage, setCourseMessage } = useMessage();
   const { getVacancy, postVacancy, putVacancy, deleteVacancy, vacancyLoading } = useFetchVacancies();
   const { getCourses, courseLoading } = useFetchCourses();
-
-  const { tokenSimt:authorization } = useAuth();
   
   const [titleErrorValidation, setTitleErrorValidation] = useState("");
   const [validation, setValidation] = useState("");
@@ -54,7 +51,7 @@ const Post = () => {
   useEffect(() => {
     (async () => {
       if(id){
-        const vacancyData = await getVacancy(authorization, id);
+        const vacancyData = await getVacancy(id);
 
         if(vacancyData !== null){
           setVacancy(vacancyData)
@@ -63,14 +60,14 @@ const Post = () => {
       
       }
     })()
-  }, [id, getVacancy, authorization])
+  }, [id, getVacancy])
 
   useEffect(() => {
     (async () => {
-        const coursesData = await getCourses(authorization);
+        const coursesData = await getCourses();
         setCourse(coursesData)
     })()
-  }, [getCourses, authorization])
+  }, [getCourses])
 
   useEffect(() => {
     if (vacancyMessage) {
@@ -167,14 +164,14 @@ const Post = () => {
 
     vacancy.courses = selectedCourses;
     if(id){
-      await putVacancy(authorization, vacancy, id)
+      await putVacancy(vacancy, id)
     }else{
-      await postVacancy(authorization, vacancy)
+      await postVacancy(vacancy)
     }
   }
   
   const handleDelete = async (id) => {
-    await deleteVacancy(authorization, id)
+    await deleteVacancy(id)
   }
 
   // loading

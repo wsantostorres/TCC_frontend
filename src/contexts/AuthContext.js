@@ -7,9 +7,6 @@ export const AuthContext = createContext();
 
 export const AuthContextProvider = ({children}) => {
 
-  // TOKEN BASIC
-  const TOKEN_BASIC = "dXNlcjpwYXNzd29yZA==";
-
   // funções hooks
   const { getDataUserSimt, register} = useFetchUsers();
   const { authenticationSuap, getDataUserSuap, verifyToken, refreshToken } = useFetchSuap();
@@ -67,7 +64,7 @@ export const AuthContextProvider = ({children}) => {
       dataUserSuap = await getDataUserSuap(tokenApiSuap.access);
 
       // pegando dados do aluno/servidor se ele tiver cadastrado ou a id presente no token do SUAP
-      responseDataSimt = await getDataUserSimt(TOKEN_BASIC, tokenApiSuap.access, dataUserSuap.bondType);
+      responseDataSimt = await getDataUserSimt(tokenApiSuap.access, dataUserSuap.bondType);
       
       // cadastrando e setando states do usuário
       if(responseDataSimt.created === false){
@@ -80,7 +77,7 @@ export const AuthContextProvider = ({children}) => {
           "course": dataUserSuap.course
         }
 
-        const userCreated = await register(TOKEN_BASIC, data)
+        const userCreated = await register(data)
 
         localStorage.setItem("tokenSUAP", JSON.stringify(tokenApiSuap))
         setTokenSuap(tokenApiSuap)
@@ -126,74 +123,69 @@ export const AuthContextProvider = ({children}) => {
 
     if(tokenSuapStoraged){
         (async () => {
-            setLoading(true)
+          setLoading(true)
 
-            try{
-              const status = await verifyToken(tokenSuapStoraged.access);
+            try {
+            
+              const statusVerifyToken = await verifyToken(tokenSuapStoraged.access);
 
-              const dataUserSuap = await getDataUserSuap(tokenSuapStoraged.access);
-              
-              const dataUserSIMT = await getDataUserSimt(TOKEN_BASIC, tokenSuapStoraged.access, dataUserSuap.bondType);
-              
-              if(status === 200){
+              if(statusVerifyToken === 200){
+                const dataUserSuap = await getDataUserSuap(tokenSuapStoraged.access);
+                const dataUserSIMT = await getDataUserSimt(tokenSuapStoraged.access, dataUserSuap.bondType);
+            
                 setId(dataUserSIMT.id);
                 setTokenSuap(tokenSuapStoraged);
                 setName(dataUserSIMT.fullName);
                 setBondType(dataUserSIMT.bondType);
-                setResumeId(dataUserSIMT.resumeId)
-
-                if(dataUserSIMT.course !== ""){
-                  setCourse(dataUserSIMT.course);
+                setResumeId(dataUserSIMT.resumeId);
+            
+                if (dataUserSIMT.course !== "") {
+                    setCourse(dataUserSIMT.course);
                 }
-
-                if(dataUserSIMT.vacanciesIds !== null){
-                  setStudentVacancies(dataUserSIMT.vacanciesIds)
+            
+                if (dataUserSIMT.vacanciesIds !== null) {
+                    setStudentVacancies(dataUserSIMT.vacanciesIds);
                 }
-        
               }else{
-                try {
-                  // update token
-                  const response = await refreshToken(tokenSuapStoraged.refresh);
-                  
-                  if(response.status === 200){
-                    const newAccess = await response.json();                   
-
-                    const newToken = {
+                throw error;
+              }
+          
+            } catch (error) {
+              try {
+                  const responseRefreshToken = await refreshToken(tokenSuapStoraged.refresh);
+                  const newAccess = await responseRefreshToken.json();
+          
+                  const newToken = {
                       refresh: tokenSuapStoraged.refresh,
                       access: newAccess.access
-                    }
-
-                    localStorage.setItem('tokenSUAP', JSON.stringify(newToken))
-                    setId(dataUserSIMT.id);
-                    setTokenSuap(newToken);
-                    setName(dataUserSIMT.fullName);
-                    setBondType(dataUserSIMT.bondType);
-                    setResumeId(dataUserSIMT.resumeId)
-
-                    if(dataUserSIMT.course !== ""){
-                      setCourse(dataUserSIMT.course);
-                    }
-
-                    if(dataUserSIMT.vacanciesIds !== null){
-                      setStudentVacancies(dataUserSIMT.vacanciesIds)
-                    }
-
-                  }else{
-                    logout();
-                    setError("Não foi possível validar seu acesso.")
+                  };
+          
+                  localStorage.setItem('tokenSUAP', JSON.stringify(newToken));
+                  setTokenSuap(newToken);
+                  
+                  const refreshedDataUserSuap = await getDataUserSuap(newToken.access);
+                  const refreshedDataUserSIMT = await getDataUserSimt(newToken.access, refreshedDataUserSuap.bondType);
+          
+                  setId(refreshedDataUserSIMT.id);
+                  setName(refreshedDataUserSIMT.fullName);
+                  setBondType(refreshedDataUserSIMT.bondType);
+                  setResumeId(refreshedDataUserSIMT.resumeId);
+          
+                  if (refreshedDataUserSIMT.course !== "") {
+                      setCourse(refreshedDataUserSIMT.course);
                   }
-                }catch (err) {
+          
+                  if (refreshedDataUserSIMT.vacanciesIds !== null) {
+                      setStudentVacancies(refreshedDataUserSIMT.vacanciesIds);
+                  }
+          
+              } catch (error) {
                   logout();
-                  setError("Não foi possível estabelecer conexão com o servidor ou não foi possível validar seu acesso.");
-                }
+                  setError("Não foi possível validar seu acesso.");
               }
-
-            }catch(err){
-              logout();
-              setError("Não foi possível estabelecer conexão com o servidor ou não foi possível validar seu acesso.");
             }
-
-            setLoading(false)
+          
+          setLoading(false)
         })()
     }else{
       logout();

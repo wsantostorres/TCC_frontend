@@ -5,7 +5,7 @@ export const useFetchUsers = () => {
 
   const url = apiSimt();
 
-  const getDataUserSimt = useCallback(async (authorization, token, bondType) => {
+  const getDataUserSimt = useCallback(async (token, bondType) => {
    
     const data = {
       token,
@@ -15,7 +15,6 @@ export const useFetchUsers = () => {
     const response = await fetch(`${url}/auth/get-data`, {
       method: "POST",
       headers: {
-        "Authorization": `Basic ${authorization}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data)
@@ -25,12 +24,11 @@ export const useFetchUsers = () => {
     return dataUserSIMT;
   }, [url])
     
-  const register = async (authorization, data) => {
+  const register = async (data) => {
 
       const response = await fetch(`${url}/auth/register`, {
         method: "POST",
         headers: {
-            "Authorization": `Basic ${authorization}`,
             "Content-Type": "application/json",
         },
         body: JSON.stringify(data)

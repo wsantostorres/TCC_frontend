@@ -16,7 +16,7 @@ import { BiEdit } from 'react-icons/bi';
 const VacancyCard = ({id, title, description = "", date, type, morning, afternoon, night}) => {
 
     const { vacancyMessage, setVacancyMessage } = useMessage();
-    const { id:studentId, bondType, studentVacancies, tokenSimt:authorization } = useAuth();
+    const { id:studentId, bondType, studentVacancies } = useAuth();
     const { sendResumeToVacancy, downloadResumes, vacancyLoading } = useFetchVacancies();
     const [message, setMessage] = useState("");
     const [isApplied, setIsApplied] = useState();
@@ -97,7 +97,7 @@ const VacancyCard = ({id, title, description = "", date, type, morning, afternoo
                     {bondType === "Servidor" && (
                         <>
                             <Link id="link-edit-vacancy" className={styles.linkEditVacancy}  to={`/publicacao/${id}`}><BiEdit/> <span>Editar</span></Link>
-                            <button id="btn-download-resumes" className={styles.buttonDownloadResumes} data-bs-toggle="modal" data-bs-target="#modalVacancy" onClick={async() => { await downloadResumes(authorization, id, title) }} ><FiDownloadCloud/><span>Baixar Currículos</span></button>
+                            <button id="btn-download-resumes" className={styles.buttonDownloadResumes} data-bs-toggle="modal" data-bs-target="#modalVacancy" onClick={async() => { await downloadResumes(id, title) }} ><FiDownloadCloud/><span>Baixar Currículos</span></button>
                         </>
                     )}
         
@@ -105,7 +105,7 @@ const VacancyCard = ({id, title, description = "", date, type, morning, afternoo
                         isApplied ? (
                             <button id="btn-send-resume-ok" type="button" className={styles.resumeSent}><BsCheckLg /> <span>Currículo Enviado</span></button>
                         ) : (
-                            <button id="btn-send-resume" className={styles.buttonSendResume} data-bs-toggle="modal" data-bs-target="#modalVacancy" onClick={async () => { await sendResumeToVacancy(authorization, studentId, id) }}><AiOutlineSend /> <span>Enviar Currículo</span></button>
+                            <button id="btn-send-resume" className={styles.buttonSendResume} data-bs-toggle="modal" data-bs-target="#modalVacancy" onClick={async () => { await sendResumeToVacancy(studentId, id) }}><AiOutlineSend /> <span>Enviar Currículo</span></button>
                         )
                     )}
                 </div>

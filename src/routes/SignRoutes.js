@@ -1,15 +1,14 @@
 // React-Router-Dom
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 
 // Pages
 import Login from '../pages/Login/Login';
-import Error from "../pages/Error/Error";
 
 const SignRoutes = () => {
   return (
     <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="*" element={<Error />} />
+        <Route path="*" element={<Navigate to="/" />} />
     </Routes>
   )
 }
