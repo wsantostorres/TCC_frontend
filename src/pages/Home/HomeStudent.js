@@ -21,7 +21,7 @@ const HomeStudent = () => {
     const [searchParams, setSearchParams] = useSearchParams();
 
     const { vacancyMessage, setVacancyMessage } = useMessage();
-    const { bondType, logout, name, course} = useAuth()
+    const { bondType, logout, name, courseId, courseName} = useAuth()
     const { searchVacancies, getAllVacancies, vacancyLoading } = useFetchVacancies();
 
     const [vacancies, setVacancies] = useState(null);
@@ -42,33 +42,39 @@ const HomeStudent = () => {
         (async () => {
 
             const data = {
-                course: course,
+                courseId: courseId,
                 bondType: bondType
             }
 
-            let allVacancies;
+            try {
+                let allVacancies;
 
-            if(page > 1){
-                allVacancies = await getAllVacancies(data, page);
-            }else{
-                setSearchParams({});
-                allVacancies = await getAllVacancies(data);
+                if(page > 1){
+                    allVacancies = await getAllVacancies(data, page);
+                }else{
+                    setSearchParams({});
+                    allVacancies = await getAllVacancies(data);
+                }
+    
+                setVacancies(allVacancies.vacancies)
+    
+                const pageableVacancies = {
+                    totalElements: allVacancies.totalElements,
+                    totalPages: allVacancies.totalPages,
+                    currentPage: allVacancies.currentPage + 1,
+                    pageSize: allVacancies.pageSize
+                }
+                setPageableData(pageableVacancies);
+
+            } catch (error) {
+                setVacancies([])
             }
 
-            setVacancies(allVacancies.vacancies)
-
-            const pageableVacancies = {
-                totalElements: allVacancies.totalElements,
-                totalPages: allVacancies.totalPages,
-                currentPage: allVacancies.currentPage + 1,
-                pageSize: allVacancies.pageSize
-            }
-            setPageableData(pageableVacancies);
 
             setSearchText("")
             setErrorMessage("")
         })()
-    }, [course, getAllVacancies, bondType, setSearchParams, page])
+    }, [courseId, getAllVacancies, bondType, setSearchParams, page])
 
     useEffect(() => {
         if (vacancyMessage.type === "error") {
@@ -81,21 +87,25 @@ const HomeStudent = () => {
         e.preventDefault();
 
         const data = {
-            course: course,
+            courseId: courseId,
             bondType: bondType
         }
 
-        const searchResults = await searchVacancies(data, null, search);
+        try {
+            const searchResults = await searchVacancies(data, null, search);
         
-        setVacancies(searchResults.vacancies)
-
-        const pageableVacancies = {
-            totalElements: searchResults.totalElements,
-            totalPages: searchResults.totalPages,
-            currentPage: searchResults.currentPage + 1,
-            pageSize: searchResults.pageSize
+            setVacancies(searchResults.vacancies)
+    
+            const pageableVacancies = {
+                totalElements: searchResults.totalElements,
+                totalPages: searchResults.totalPages,
+                currentPage: searchResults.currentPage + 1,
+                pageSize: searchResults.pageSize
+            }
+            setPageableData(pageableVacancies);
+        } catch (error) {
+            setVacancies([])
         }
-        setPageableData(pageableVacancies);
 
         setSearchText(search)
       }
@@ -107,36 +117,40 @@ const HomeStudent = () => {
     const handlePageChange = async (pageNumber) => {
 
         const data = {
-            course: course,
+            courseId: courseId,
             bondType: bondType
         }
 
-        if(search){
-            const searchResults = await searchVacancies(data, pageNumber, search);
+        try {
+            if(search){
+                const searchResults = await searchVacancies(data, pageNumber, search);
+            
+                setVacancies(searchResults.vacancies)
         
-            setVacancies(searchResults.vacancies)
+                const pageableVacancies = {
+                    totalElements: searchResults.totalElements,
+                    totalPages: searchResults.totalPages,
+                    currentPage: searchResults.currentPage + 1,
+                    pageSize: searchResults.pageSize
+                }
+                setPageableData(pageableVacancies);
     
-            const pageableVacancies = {
-                totalElements: searchResults.totalElements,
-                totalPages: searchResults.totalPages,
-                currentPage: searchResults.currentPage + 1,
-                pageSize: searchResults.pageSize
+            }else{
+                const allVacancies = await getAllVacancies(data, pageNumber);
+    
+                setVacancies(allVacancies.vacancies)
+        
+                const pageableVacancies = {
+                    totalElements: allVacancies.totalElements,
+                    totalPages: allVacancies.totalPages,
+                    currentPage: allVacancies.currentPage + 1,
+                    pageSize: allVacancies.pageSize
+                }
+        
+                setPageableData(pageableVacancies);
             }
-            setPageableData(pageableVacancies);
-
-        }else{
-            const allVacancies = await getAllVacancies(data, pageNumber);
-
-            setVacancies(allVacancies.vacancies)
-    
-            const pageableVacancies = {
-                totalElements: allVacancies.totalElements,
-                totalPages: allVacancies.totalPages,
-                currentPage: allVacancies.currentPage + 1,
-                pageSize: allVacancies.pageSize
-            }
-    
-            setPageableData(pageableVacancies);
+        } catch (error) {
+            setVacancies([])
         }
 
         window.scrollTo({
@@ -203,7 +217,7 @@ const HomeStudent = () => {
             <section className={styles.title}>
                 <div>
                     <h4>Vagas</h4>
-                    {course && (<p>{course}</p>)}
+                    {courseName && (<p>{courseName}</p>)}
                 </div>
             </section>
 
@@ -239,7 +253,10 @@ const HomeStudent = () => {
             )}
         </main>
 
-        <Pagination totalPages={pageableData.totalPages} currentPage={pageableData.currentPage} onPageChange={handlePageChange}/>
+        { pageableData.totalPages > 1 && (
+            <Pagination totalPages={pageableData.totalPages} currentPage={pageableData.currentPage} onPageChange={handlePageChange}/>
+        )}
+
 
     </div>
   )

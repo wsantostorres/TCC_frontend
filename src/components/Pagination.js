@@ -40,21 +40,11 @@ const Pagination = ({ totalPages, currentPage, onPageChange }) => {
           </li>
         ))}
 
-          {
-            totalPages !== 0 ? (
-              <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
-                <Link className="page-link" to={`/?page=${currentPage + 1}`} onClick={() => onPageChange(currentPage + 1)}>
-                  Próxima
-                </Link>
-            </li>
-            ) : (
-              <li className="page-item disabled">
-                <Link className="page-link" href="/" onClick={() => onPageChange(currentPage + 1)}>
-                  Próxima
-                </Link>
-              </li>
-            )
-          }
+        <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
+          <Link className="page-link" to={`/?page=${currentPage + 1}`} onClick={() => onPageChange(currentPage + 1)}>
+            Próxima
+          </Link>
+        </li>
 
       </ul>
     </div>

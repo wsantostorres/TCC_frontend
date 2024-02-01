@@ -16,7 +16,8 @@ export const AuthContextProvider = ({children}) => {
   const [id, setId] = useState();
   const [name, setName] = useState();
   const [bondType, setBondType] = useState();
-  const [course, setCourse] = useState();
+  const [courseId, setCourseId] = useState();
+  const [courseName, setCourseName] = useState();
   const [resumeId, setResumeId] = useState(null);
   const [studentVacancies, setStudentVacancies] = useState(null);
   const [error, setError] = useState("");
@@ -84,7 +85,8 @@ export const AuthContextProvider = ({children}) => {
         setId(userCreated.id)
         setName(userCreated.fullName)
         setBondType(userCreated.bondType)
-        setCourse(userCreated.course)
+        setCourseId(userCreated.courseId)
+        setCourseName(userCreated.courseName)
         
       }else{
         localStorage.setItem("tokenSUAP", JSON.stringify(tokenApiSuap))
@@ -92,7 +94,8 @@ export const AuthContextProvider = ({children}) => {
         setId(responseDataSimt.id)
         setName(responseDataSimt.fullName)
         setBondType(responseDataSimt.bondType)
-        setCourse(responseDataSimt.course)
+        setCourseId(responseDataSimt.courseId)
+        setCourseName(responseDataSimt.courseName)
         setResumeId(responseDataSimt.resumeId)
         setStudentVacancies(responseDataSimt.vacanciesIds)
       }
@@ -113,7 +116,8 @@ export const AuthContextProvider = ({children}) => {
     setId("")
     setName("")
     setBondType("")
-    setCourse("")
+    setCourseId(null)
+    setCourseName("")
     setResumeId(null)
     setStudentVacancies(null)
     window.history.pushState("", "", "/");
@@ -140,8 +144,9 @@ export const AuthContextProvider = ({children}) => {
                 setBondType(dataUserSIMT.bondType);
                 setResumeId(dataUserSIMT.resumeId);
             
-                if (dataUserSIMT.course !== "") {
-                    setCourse(dataUserSIMT.course);
+                if (dataUserSIMT.courseName !== "") {
+                  setCourseId(dataUserSIMT.courseId);
+                  setCourseName(dataUserSIMT.courseName);
                 }
             
                 if (dataUserSIMT.vacanciesIds !== null) {
@@ -173,7 +178,8 @@ export const AuthContextProvider = ({children}) => {
                   setResumeId(refreshedDataUserSIMT.resumeId);
           
                   if (refreshedDataUserSIMT.course !== "") {
-                      setCourse(refreshedDataUserSIMT.course);
+                    setCourseId(refreshedDataUserSIMT.courseId);
+                    setCourseName(refreshedDataUserSIMT.courseName);
                   }
           
                   if (refreshedDataUserSIMT.vacanciesIds !== null) {
@@ -195,7 +201,7 @@ export const AuthContextProvider = ({children}) => {
 }, [getDataUserSuap, getDataUserSimt, verifyToken, refreshToken])
 
 return (
-    <AuthContext.Provider value={{ tokenSuap, id, name, bondType, course, resumeId, setResumeId, studentVacancies, setStudentVacancies, error, loading, login, logout }}>
+    <AuthContext.Provider value={{ tokenSuap, id, name, bondType, courseId, courseName, resumeId, setResumeId, studentVacancies, setStudentVacancies, error, loading, login, logout }}>
         {children}
     </AuthContext.Provider>
   )

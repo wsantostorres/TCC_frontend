@@ -28,13 +28,23 @@ export const useFetchVacancies = () => {
       urlToFetch = `${url}/vacancies/search?title=${search}&page=${page}`;
     }
 
+    let headersToFetch;
+    if(data.bondType === "Servidor"){
+      headersToFetch = {
+        'bondType': data.bondType,
+        'Content-Type': 'application/json',
+      }
+    }else{
+      headersToFetch = {
+        'bondType': data.bondType,
+        'courseId': data.courseId,
+        'Content-Type': 'application/json',
+      }
+    }
+
     return fetch(urlToFetch, {
       method: "GET",
-      headers: {
-        'bondType': data.bondType,
-        'course': data.course,
-        'Content-Type': "application/json"
-      }
+      headers: headersToFetch
     }).then((response) => {
       return response.json();
     })
@@ -43,7 +53,6 @@ export const useFetchVacancies = () => {
       return responseJson;
     })
     .catch((err) => {
-      console.log(err)
       setVacancyMessage({msg:"Não foi possível buscar vagas.", type:"error"});
       setVacancyLoading(false);
     })
@@ -58,13 +67,23 @@ export const useFetchVacancies = () => {
       urlToFetch = `${url}/vacancies?page=${page}`;
     }
 
+    let headersToFetch;
+    if(data.bondType === "Servidor"){
+      headersToFetch = {
+        'bondType': data.bondType,
+        'Content-Type': 'application/json',
+      }
+    }else{
+      headersToFetch = {
+        'bondType': data.bondType,
+        'courseId': data.courseId,
+        'Content-Type': 'application/json',
+      }
+    }
+
     return fetch(urlToFetch, {
       method: "GET",
-      headers: {
-        'bondType': data.bondType,
-        'course': data.course,
-        'Content-Type': 'application/json',
-      },
+      headers: headersToFetch
     })
     .then((response) => {
       if (response.status !== 200) {
@@ -77,7 +96,6 @@ export const useFetchVacancies = () => {
       return responseJson;
     })
     .catch((err) => {
-      console.log(err)
       setVacancyLoading(false);
       setVacancyMessage({msg:"Não foi possível carregar vagas.", type:"error"});
       return null;
