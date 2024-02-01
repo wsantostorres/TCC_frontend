@@ -116,6 +116,7 @@ export const AuthContextProvider = ({children}) => {
     setCourse("")
     setResumeId(null)
     setStudentVacancies(null)
+    window.history.pushState("", "", "/");
   }
 
   useEffect(() => {

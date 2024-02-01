@@ -1,0 +1,18 @@
+.custom-pagination .page-item a.page-link {
+    box-shadow: none;
+    color: #0F5739;
+    background-color: #ffff;
+    border-color: #dee2e6;
+}
+
+.custom-pagination .page-item.active a.page-link {
+    color: #fff;
+    background-color: #0F5739;
+    border-color: #0F5739;
+}
+
+.custom-pagination .page-item.disabled a.page-link {
+    color: #6c757d;
+    background-color: #e9ecef;
+    border-color: #dee2e6;
+}

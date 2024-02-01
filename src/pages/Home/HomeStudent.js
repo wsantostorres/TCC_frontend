@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { useFetchVacancies } from "../../hooks/useFetchVacancies";
 
 import { useAuth } from "../../contexts/AuthContext";
@@ -12,10 +12,13 @@ import { BsSearch } from 'react-icons/bs';
 import { CgFileDocument } from 'react-icons/cg';
 
 import VacancyCard from "./VacancyCard";
+import Pagination from "../../components/Pagination";
 
 const HomeStudent = () => {
 
     document.title = "Home";
+
+    const [searchParams, setSearchParams] = useSearchParams();
 
     const { vacancyMessage, setVacancyMessage } = useMessage();
     const { bondType, logout, name, course} = useAuth()
@@ -26,14 +29,46 @@ const HomeStudent = () => {
     const [searchText, setSearchText] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
 
+    const [pageableData, setPageableData] = useState({
+        totalElements: 0,
+        totalPages: 0,
+        currentPage: 0,
+        pageSize: 0
+    });
+
+    const page = searchParams.get('page');
+
     useEffect(() => {
         (async () => {
-            const allVacancies = await getAllVacancies(course, bondType);
-            setVacancies(allVacancies)
+
+            const data = {
+                course: course,
+                bondType: bondType
+            }
+
+            let allVacancies;
+
+            if(page > 1){
+                allVacancies = await getAllVacancies(data, page);
+            }else{
+                setSearchParams({});
+                allVacancies = await getAllVacancies(data);
+            }
+
+            setVacancies(allVacancies.vacancies)
+
+            const pageableVacancies = {
+                totalElements: allVacancies.totalElements,
+                totalPages: allVacancies.totalPages,
+                currentPage: allVacancies.currentPage + 1,
+                pageSize: allVacancies.pageSize
+            }
+            setPageableData(pageableVacancies);
+
             setSearchText("")
             setErrorMessage("")
         })()
-    }, [course, getAllVacancies, bondType])
+    }, [course, getAllVacancies, bondType, setSearchParams, page])
 
     useEffect(() => {
         if (vacancyMessage.type === "error") {
@@ -44,14 +79,72 @@ const HomeStudent = () => {
 
     const handleSearch = async(e) => {
         e.preventDefault();
-        const searchResults = await searchVacancies(search, course, bondType);
-        setVacancies(searchResults)
+
+        const data = {
+            course: course,
+            bondType: bondType
+        }
+
+        const searchResults = await searchVacancies(data, null, search);
+        
+        setVacancies(searchResults.vacancies)
+
+        const pageableVacancies = {
+            totalElements: searchResults.totalElements,
+            totalPages: searchResults.totalPages,
+            currentPage: searchResults.currentPage + 1,
+            pageSize: searchResults.pageSize
+        }
+        setPageableData(pageableVacancies);
+
         setSearchText(search)
       }
 
     const initialLetter = (name) => {
         return name[0];
     }
+
+    const handlePageChange = async (pageNumber) => {
+
+        const data = {
+            course: course,
+            bondType: bondType
+        }
+
+        if(search){
+            const searchResults = await searchVacancies(data, pageNumber, search);
+        
+            setVacancies(searchResults.vacancies)
+    
+            const pageableVacancies = {
+                totalElements: searchResults.totalElements,
+                totalPages: searchResults.totalPages,
+                currentPage: searchResults.currentPage + 1,
+                pageSize: searchResults.pageSize
+            }
+            setPageableData(pageableVacancies);
+
+        }else{
+            const allVacancies = await getAllVacancies(data, pageNumber);
+
+            setVacancies(allVacancies.vacancies)
+    
+            const pageableVacancies = {
+                totalElements: allVacancies.totalElements,
+                totalPages: allVacancies.totalPages,
+                currentPage: allVacancies.currentPage + 1,
+                pageSize: allVacancies.pageSize
+            }
+    
+            setPageableData(pageableVacancies);
+        }
+
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+
+    };
 
   return (
     <div className={styles.pageHome}>
@@ -141,7 +234,12 @@ const HomeStudent = () => {
                         night={vacancy.night} />
                 ))}
             </section>
+            {vacancies && vacancies.length === 0 && (
+                 <p className="d-flex justify-content-center">Não foram encontradas vagas.</p>
+            )}
         </main>
+
+        <Pagination totalPages={pageableData.totalPages} currentPage={pageableData.currentPage} onPageChange={handlePageChange}/>
 
     </div>
   )

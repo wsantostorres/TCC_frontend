@@ -19,19 +19,20 @@ export const useFetchVacancies = () => {
   
   const url = apiSimt();
 
-  const searchVacancies = useCallback(async (search, course, bondType) => {
+  const searchVacancies = useCallback(async (data, page, search) => {
     setVacancyLoading(true)
 
     let urlToFetch = `${url}/vacancies/search?title=${search}`;
   
-    if (course) {
-      urlToFetch = `${url}/vacancies/search?title=${search}&course=${course}`;
+    if (page) {
+      urlToFetch = `${url}/vacancies/search?title=${search}&page=${page}`;
     }
 
     return fetch(urlToFetch, {
       method: "GET",
       headers: {
-        'bondType': `${bondType}`,
+        'bondType': data.bondType,
+        'course': data.course,
         'Content-Type': "application/json"
       }
     }).then((response) => {
@@ -48,20 +49,22 @@ export const useFetchVacancies = () => {
     })
   } , [url, setVacancyMessage])
   
-  const getAllVacancies = useCallback(async (course, bondType) => {
+  const getAllVacancies = useCallback(async (data, page) => {
     setVacancyLoading(true);
+
     let urlToFetch = `${url}/vacancies`;
-  
-    if (course) {
-      urlToFetch = `${url}/vacancies?course=${course}`;
+
+    if(page){
+      urlToFetch = `${url}/vacancies?page=${page}`;
     }
 
     return fetch(urlToFetch, {
       method: "GET",
       headers: {
-        'bondType': `${bondType}`,
+        'bondType': data.bondType,
+        'course': data.course,
         'Content-Type': 'application/json',
-      }
+      },
     })
     .then((response) => {
       if (response.status !== 200) {
