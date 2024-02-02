@@ -17,12 +17,14 @@ import styles from './Post.module.css';
 import { LuSave } from 'react-icons/lu';
 import { BsTrash } from 'react-icons/bs';
 import { IoMdArrowRoundBack } from 'react-icons/io'
+import { useAuth } from "../../contexts/AuthContext";
 
 const Post = () => {
   const { id } = useParams();
   const { vacancyMessage, setVacancyMessage, courseMessage, setCourseMessage } = useMessage();
   const { getVacancy, postVacancy, putVacancy, deleteVacancy, vacancyLoading } = useFetchVacancies();
   const { getCourses, courseLoading } = useFetchCourses();
+  const { id:authId } = useAuth();
   
   const [titleErrorValidation, setTitleErrorValidation] = useState("");
   const [validation, setValidation] = useState("");
@@ -38,7 +40,8 @@ const Post = () => {
     morning: 0,
     afternoon: 0,
     night: 0,
-    courses:[]
+    courses:[],
+    employeeId: null
   });
 
   // page title
@@ -163,6 +166,8 @@ const Post = () => {
     setValidation({});
 
     vacancy.courses = selectedCourses;
+    vacancy.employeeId = authId;
+    
     if(id){
       await putVacancy(vacancy, id)
     }else{

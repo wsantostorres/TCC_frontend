@@ -192,7 +192,6 @@ export const useFetchVacancies = () => {
       await fetch(`${url}/vacancies/${id}`, {
         method: "DELETE",
         headers: {
-
           'Content-Type': 'application/json'
         }
       });
