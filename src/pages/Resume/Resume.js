@@ -30,6 +30,7 @@ const Resume = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [resume, setResume] = useState({
+    complementaryCourses: [],
     projects: [],
     experiences: [],
     academics: [],
@@ -49,6 +50,8 @@ const Resume = () => {
   const[academics, setAcademics] = useState([])
   const[projects, setProjects] = useState([])
   const[experiences, setExperiences] = useState([])
+  const[complementaryCourses, setComplementaryCourses] = useState([]);
+
   const[modified, setModified] = useState(false);
 
   /* Ao salvar o currículo eu estou atualizando o resumeId
@@ -66,6 +69,7 @@ const Resume = () => {
           setAcademics(resumeData.academics)
           setProjects(resumeData.projects)
           setExperiences(resumeData.experiences)
+          setComplementaryCourses(resumeData.complementaryCourses)
           setModified(false)
         }
       
@@ -107,6 +111,8 @@ const Resume = () => {
     resume.academics = academics;
     resume.projects = projects;
     resume.experiences = experiences;
+    resume.complementaryCourses = complementaryCourses;
+
     if(resumeId !== null && resumeId !== undefined){
       await putResume(studentId, resumeId, resume)
       setModified(true)
@@ -171,6 +177,19 @@ const Resume = () => {
     setProjects(updatedProjects);
   };
 
+  const handleComplementaryCourseChange = (e, index) => {
+    const { name, value } = e.target;
+    const updatedComplementaryCourses = [...complementaryCourses];
+    
+    if (updatedComplementaryCourses[index].id) {
+      updatedComplementaryCourses[index][name] = value;
+    } else {
+      updatedComplementaryCourses[index] = { ...updatedComplementaryCourses[index], [name]: value };
+    }
+    
+    setComplementaryCourses(updatedComplementaryCourses);
+  };
+
   const handleExperienceChange = (e, index) => {
     const { name, value } = e.target;
     const updatedExperiences = [...experiences];
@@ -216,6 +235,16 @@ const Resume = () => {
       setExperiences([...experiences, {
         functionName: '',
 			  company: '',
+			  initialYear: '',
+			  closingYear: '' }]);
+    }
+  };
+
+  const addComplementaryCourses = () => {
+    if (complementaryCourses.length < 5) {
+      setComplementaryCourses([...complementaryCourses, {
+        courseName: '',
+			  foundation: '',
 			  initialYear: '',
 			  closingYear: '' }]);
     }
@@ -332,7 +361,7 @@ const Resume = () => {
         </div>
         
         <div>
-          <h5 className="fw-bold"><span>4</span>Habilidades</h5>
+          <h5 className="fw-bold"><span>3</span>Habilidades</h5>
           {skills.map((skill, index) => (
             <div key={index}>
               <label htmlFor={`skills[${index}].nameSkill`}><strong>{`Habilidade ${index + 1}`}:</strong></label>
@@ -354,7 +383,7 @@ const Resume = () => {
         </div>
 
         <div>
-          <h5 className="fw-bold"><span>5</span>Formações Acadêmicas</h5>
+          <h5 className="fw-bold"><span>4</span>Formações Acadêmicas</h5>
           {academics.map((academic, index) => (
             <div key={index}>
               <p className="fw-bold">{`Formação ${index + 1}`}:</p>
@@ -403,7 +432,7 @@ const Resume = () => {
         </div>
 
         <div>
-          <h5 className="fw-bold"><span>6</span>Projetos</h5>
+          <h5 className="fw-bold"><span>5</span>Projetos</h5>
           {projects.map((project, index) => (
             <div key={index}>
               <p className="fw-bold">{`Projeto ${index + 1}`}:</p>
@@ -452,7 +481,7 @@ const Resume = () => {
         </div>
 
         <div>
-          <h5 className="fw-bold"><span>7</span>Experiências</h5>
+          <h5 className="fw-bold"><span>6</span>Experiências</h5>
           {experiences.map((experience, index) => (
             <div key={index}>
               <p className="fw-bold">{`Experiência ${index + 1}`}:</p>
@@ -497,6 +526,55 @@ const Resume = () => {
           <br />
           <button id="btn-add-experience" className={`btn btn-success ${styles.addButtons}`} type="button" onClick={addExperience}>
           < BsPlusLg /> Experiência
+          </button>
+        </div>
+
+        <div>
+          <h5 className="fw-bold"><span>7</span>Cursos Complementares</h5>
+          {complementaryCourses.map((complementaryCourse, index) => (
+            <div key={index}>
+              <p className="fw-bold">{`Curso ${index + 1}`}:</p>
+              <input
+              className="form-control"
+                type="text"
+                name={`courseName`}
+                onChange={(e) => handleComplementaryCourseChange(e, index)}
+                value={complementaryCourse.courseName}
+                placeholder={`Nome do curso`}
+              />
+              <br />
+              <input
+              className="form-control"
+                type="text"
+                name={`foundation`}
+                onChange={(e) => handleComplementaryCourseChange(e, index)}
+                value={complementaryCourse.foundation}
+                placeholder={`Organização`}
+              />
+              <br />
+              <input
+              className="form-control"
+                type="number"
+                name={`initialYear`}
+                onChange={(e) => handleComplementaryCourseChange(e, index)}
+                value={complementaryCourse.initialYear}
+                placeholder={`Ano de Inicio`}
+              />
+              <br />
+              <input
+              className="form-control"
+                type="number"
+                name={`closingYear`}
+                onChange={(e) => handleComplementaryCourseChange(e, index)}
+                value={complementaryCourse.closingYear}
+                placeholder={`Ano de Fim`}
+              />
+              <br />
+            </div>
+          ))}
+          <br />
+          <button id="btn-add-complementaryCourse" className={`btn btn-success ${styles.addButtons}`} type="button" onClick={addComplementaryCourses}>
+          < BsPlusLg /> Curso Complementar
           </button>
         </div>
 
