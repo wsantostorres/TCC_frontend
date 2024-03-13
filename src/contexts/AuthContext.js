@@ -64,6 +64,13 @@ export const AuthContextProvider = ({children}) => {
       // pegando dados do suap
       dataUserSuap = await getDataUserSuap(tokenApiSuap.access);
 
+      // impedindo alunos sem vínculo de logar
+      if(dataUserSuap.bondType === "Nenhum"){
+        setError("Você não possui mais vínculo com o instituto")
+        setLoading(false)
+        return;
+      }
+
       // pegando dados do aluno/servidor se ele tiver cadastrado ou a id presente no token do SUAP
       responseDataSimt = await getDataUserSimt(tokenApiSuap.access, dataUserSuap.bondType);
       
