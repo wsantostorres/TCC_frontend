@@ -100,14 +100,13 @@
     font-size: 18px;
 }
 
-.instruction{
-    background-color: #545454;
-    color: #fff;
-    padding: 1rem;
+.description{
+    color: #545454;
+    padding: 1rem 0;
     border-radius: 5px;
 }
 
-.instruction span{
+.description span{
     font-weight: bold;
 }
 

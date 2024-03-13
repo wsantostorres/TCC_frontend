@@ -207,7 +207,7 @@ const Resume = () => {
         
         <div>
           <h5 className="fw-bold"><span>3</span>Habilidades</h5>
-          <p className={styles.instruction}><small><span>Instrução:</span> Habilidade em um currículo é uma capacidade específica que uma pessoa possui e pode aplicar em um ambiente de trabalho, você pode adicionar até <span>(5)</span> habilidades. Exemplos: <em>"Proatividade", "Facilidade de Aprendizado"</em></small></p>
+          <p className={styles.description}><small><span>Descrição:</span> Habilidade em um currículo é uma capacidade específica que uma pessoa possui e pode aplicar em um ambiente de trabalho, você pode adicionar até <span>(5)</span> habilidades. Exemplos: <em>"Proatividade", "Facilidade de Aprendizado"</em></small></p>
           {skills.map((skill, index) => (
             <div key={index}>
               <label htmlFor={`skills[${index}].nameSkill`}><strong>{`Habilidade ${index + 1}`}:</strong></label>
@@ -230,7 +230,7 @@ const Resume = () => {
 
         <div>
           <h5 className="fw-bold"><span>4</span>Formações Acadêmicas</h5>
-          <p className={styles.instruction}><small><span>Instrução:</span> Formação Acadêmica em um currículo refere-se à educação formal que uma pessoa recebeu ao longo de sua vida acadêmica, você pode adicionar até <span>(3)</span> formações. Observação: Se você por acaso está ainda não terminou a sua formação, é interessante coloca-la e adicionar o ano de formação previsto. Exemplo: <em>"Ensino Médio" - "IFRN" - "2024" - "2028" </em></small></p>
+          <p className={styles.description}><small><span>Descrição:</span> Formação Acadêmica em um currículo refere-se à educação formal que você recebeu ao longo de sua vida acadêmica, você pode adicionar até <span>(3)</span> formações. Observação: Se você ainda não terminou a sua formação, é interessante inserir-la e adicionar o ano de formação previsto. Exemplo: <em>"Ensino Médio" - "IFRN" - "2024" - "2028" </em></small></p>
           {academics.map((academic, index) => (
             <div key={index}>
               <p className="fw-bold">{`Formação ${index + 1}`}:</p>
@@ -279,7 +279,7 @@ const Resume = () => {
 
         <div>
           <h5 className="fw-bold"><span>5</span>Projetos</h5>
-          <p className={styles.instruction}><small><span>Instrução:</span> Projeto em um currículo refere-se a trabalhos específicos, iniciativas ou empreendimentos nos quais você esteve envolvido, você pode adicionar até <span>(3)</span> projetos. Exemplo: <em>"Projeto Escola Conectada" - "IFRN" - "2022" - "2023"</em></small></p>
+          <p className={styles.description}><small><span>Descrição:</span> Projeto em um currículo refere-se a trabalhos específicos, iniciativas ou empreendimentos nos quais você esteve envolvido, você pode adicionar até <span>(3)</span> projetos. Exemplo: <em>"Projeto Escola Conectada" - "IFRN" - "2022" - "2023"</em></small></p>
           {projects.map((project, index) => (
             <div key={index}>
               <p className="fw-bold">{`Projeto ${index + 1}`}:</p>
@@ -328,7 +328,7 @@ const Resume = () => {
 
         <div>
           <h5 className="fw-bold"><span>6</span>Experiências</h5>
-          <p className={styles.instruction}><small><span>Instrução:</span> Experiência em um currículo refere-se ao histórico de empregos, estágios ou trabalho voluntário que você esteve envolvido, você pode adicionar até <span>(5)</span> experiências. Exemplo: <em>"Atendente" - "Comércio Familiar" - "2023" - "2024"</em></small></p>
+          <p className={styles.description}><small><span>Descrição:</span> Experiência em um currículo refere-se ao histórico de empregos, estágios ou trabalho voluntário que você esteve envolvido, você pode adicionar até <span>(5)</span> experiências. Exemplo: <em>"Atendente" - "Comércio Familiar" - "2023" - "2024"</em></small></p>
           {experiences.map((experience, index) => (
             <div key={index}>
               <p className="fw-bold">{`Experiência ${index + 1}`}:</p>
@@ -377,7 +377,7 @@ const Resume = () => {
 
         <div>
           <h5 className="fw-bold"><span>7</span>Cursos Complementares</h5>
-          <p className={styles.instruction}><small><span>Instrução:</span> Curso complementar em um currículo refere-se a qualquer formação adicional que você tenha realizado além de sua formação ou experiência, você pode adicionar até <span>(5)</span> cursos complementares. Exemplo: <em>"Excel do Básico ao Avançado" - "Udemy" - "2023" - "2023"</em></small></p>
+          <p className={styles.description}><small><span>Descrição:</span> Curso complementar em um currículo refere-se a qualquer formação adicional que você tenha realizado além de sua formação ou experiência, você pode adicionar até <span>(5)</span> cursos complementares. Exemplo: <em>"Excel do Básico ao Avançado" - "Udemy" - "2023" - "2023"</em></small></p>
           {complementaryCourses.map((complementaryCourse, index) => (
             <div key={index}>
               <p className="fw-bold">{`Curso ${index + 1}`}:</p>
