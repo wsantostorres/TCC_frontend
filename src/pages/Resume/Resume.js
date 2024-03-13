@@ -16,6 +16,9 @@ import Input from "../../components/Input";
 import InputMask from "react-input-mask";
 import Loading from '../../components/Loading';
 import { useAuth } from "../../contexts/AuthContext";
+import { useHandleChangeResumes } from "../../hooks/useHandleChangeResumes";
+import { useAddItemResume } from "../../hooks/useAddItemResume";
+import { useValidationResume } from "../../hooks/useValidationResume";
 
 const Resume = () => {
 
@@ -23,6 +26,9 @@ const Resume = () => {
   const { postResume, putResume, getResume, downloadResumePDF, resumeLoading } = useFetchResumes();
   const { id:studentId, resumeId} = useAuth();
   const { resumeMessage, setResumeMessage } = useMessage();
+  const { handleOnChange, handleSkillChange, handleGenericListChange } = useHandleChangeResumes();
+  const { addSkill, addAcademic, addExperience, addProject, addComplementaryCourses} = useAddItemResume();
+  const { validateFields } = useValidationResume();
 
   // state
   const [titleErrorValidation, setTitleErrorValidation] = useState("");
@@ -91,11 +97,10 @@ const Resume = () => {
     }
   }, [resumeMessage, setResumeMessage, setErrorMessage, setSuccessMessage]);
 
-  // handleChange
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    const errors = validateFields();
+    const errors = validateFields(resume);
 
     if (Object.keys(errors).length > 0) {
       setTitleErrorValidation("Verifique os campos do formulário.")
@@ -122,167 +127,6 @@ const Resume = () => {
     }
   }
 
-  const handleOnChange = (e) => {
-    const { name, value } = e.target;
-    const updatedResume = { ...resume };
-
-    // Verifica se o campo pertence a um objeto aninhado
-    if (name.includes(".")) {
-      const [parentField, childField] = name.split(".");
-      updatedResume[parentField][childField] = value;
-    } else {
-      updatedResume[name] = value;
-    }
-
-    setResume(updatedResume);
-    
-  };
-
-  const handleSkillChange = (e, index) => {
-    const { value } = e.target;
-    const updatedSkills = [...skills];
-
-    if (updatedSkills[index].id) {
-      updatedSkills[index] = { id: updatedSkills[index].id, nameSkill: value };
-    } else {
-      updatedSkills[index] = { nameSkill: value };
-    }
-
-    setSkills(updatedSkills);
-  };
-
-  const handleAcademicChange = (e, index) => {
-    const { name, value } = e.target;
-    const updatedAcademics = [...academics];
-    
-    if (updatedAcademics[index].id) {
-      updatedAcademics[index][name] = value;
-    } else {
-      updatedAcademics[index] = { ...updatedAcademics[index], [name]: value };
-    }
-    
-    setAcademics(updatedAcademics);
-  };
-
-  const handleProjectChange = (e, index) => {
-    const { name, value } = e.target;
-    const updatedProjects = [...projects];
-    
-    if (updatedProjects[index].id) {
-      updatedProjects[index][name] = value;
-    } else {
-      updatedProjects[index] = { ...updatedProjects[index], [name]: value };
-    }
-    
-    setProjects(updatedProjects);
-  };
-
-  const handleComplementaryCourseChange = (e, index) => {
-    const { name, value } = e.target;
-    const updatedComplementaryCourses = [...complementaryCourses];
-    
-    if (updatedComplementaryCourses[index].id) {
-      updatedComplementaryCourses[index][name] = value;
-    } else {
-      updatedComplementaryCourses[index] = { ...updatedComplementaryCourses[index], [name]: value };
-    }
-    
-    setComplementaryCourses(updatedComplementaryCourses);
-  };
-
-  const handleExperienceChange = (e, index) => {
-    const { name, value } = e.target;
-    const updatedExperiences = [...experiences];
-    
-    if (updatedExperiences[index].id) {
-      updatedExperiences[index][name] = value;
-    } else {
-      updatedExperiences[index] = { ...updatedExperiences[index], [name]: value };
-    }
-    
-    setExperiences(updatedExperiences);
-  };
-
-  // add new
-  const addSkill = () => {
-    if (skills.length < 5) {
-      setSkills([...skills, { nameSkill: '' }]);
-    }
-  };
-
-  const addAcademic = () => {
-    if (academics.length < 3) {
-      setAcademics([...academics, {
-        schooling: '',
-			  foundation: '',
-			  initialYear: '',
-			  closingYear: '' }]);
-    }
-  };
-
-  const addProject = () => {
-    if (projects.length < 3) {
-      setProjects([...projects, {
-        titleProject: '',
-			  foundation: '',
-			  initialYear: '',
-			  closingYear: '' }]);
-    }
-  };
-
-  const addExperience = () => {
-    if (experiences.length < 5) {
-      setExperiences([...experiences, {
-        functionName: '',
-			  company: '',
-			  initialYear: '',
-			  closingYear: '' }]);
-    }
-  };
-
-  const addComplementaryCourses = () => {
-    if (complementaryCourses.length < 5) {
-      setComplementaryCourses([...complementaryCourses, {
-        courseName: '',
-			  foundation: '',
-			  initialYear: '',
-			  closingYear: '' }]);
-    }
-  };
-
-  // validation
-  const validateFields = () => {
-    const errors = {};
-  
-    // Validar número de telefone
-    if (!resume.contact.phone || resume.contact.phone.length < 15 || resume.contact.phone.includes("_")){
-      errors.phone = "Número de telefone inválido.";
-    }
-  
-    // Validar email
-    const emailPattern = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i; // Expressão regular para validar email
-    if (!resume.contact.email || !emailPattern.test(resume.contact.email)) {
-      errors.email = "Email inválido.";
-    }
-  
-    // Validar nome da rua
-    if (!resume.address.street || resume.address.street.trim() === "") {
-      errors.street = "O nome da rua é obrigatório.";
-    }
-  
-    // Validar número da casa
-    if (!resume.address.number) {
-      errors.number = "O número da casa é obrigatório.";
-    }
-  
-    // Validar cidade
-    if (!resume.address.city || resume.address.city.trim() === "") {
-      errors.city = "A cidade é obrigatória.";
-    } 
-  
-    return errors;
-  };
-
   // loading
   if(resumeLoading){
     return (<Loading />)
@@ -305,7 +149,7 @@ const Resume = () => {
           <Input name="contact.email"
                 type="email" 
                 placeholder="Digite seu endereço de email" 
-                handleChange={handleOnChange}
+                handleChange={(e) => handleOnChange(e, resume, setResume)}
                 valueLabel="Email: " 
                 value={resume.contact.email} 
                 messageError={validation && validation.email}   
@@ -317,7 +161,7 @@ const Resume = () => {
                 type="text"
                 id="phoneNumber"
                 placeholder="Digite seu número de telefone"
-                onChange={handleOnChange}
+                onChange={(e) => handleOnChange(e, resume, setResume)}
                 value={resume.contact.phone}
                 className={`form-control ${validation && validation.phone ? "is-invalid" : ""}`} />
                 {validation && validation.phone && (<small className="invalid-feedback d-block fw-bold" >{validation.phone}</small>)}
@@ -325,7 +169,7 @@ const Resume = () => {
           <Input name="contact.linkedin"
                 type="text" 
                 placeholder="Digite seu linkedin" 
-                handleChange={handleOnChange}
+                handleChange={(e) => handleOnChange(e, resume, setResume)}
                 valueLabel="Linkedin: " 
                 value={resume.contact.linkedin} 
                 messageError="" 
@@ -336,7 +180,7 @@ const Resume = () => {
           <Input name="address.street"
                 type="text" 
                 placeholder="Nome da Rua" 
-                handleChange={handleOnChange}
+                handleChange={(e) => handleOnChange(e, resume, setResume)}
                 valueLabel="Rua: " 
                 value={resume.address.street} 
                 messageError={validation && validation.street}   
@@ -345,7 +189,7 @@ const Resume = () => {
           <Input name="address.number"
                 type="number" 
                 placeholder="Nº da Casa" 
-                handleChange={handleOnChange}
+                handleChange={(e) => handleOnChange(e, resume, setResume)}
                 valueLabel="Número: " 
                 value={resume.address.number} 
                 messageError={validation && validation.number}  
@@ -354,7 +198,7 @@ const Resume = () => {
           <Input name="address.city"
                 type="text" 
                 placeholder="Sua cidade" 
-                handleChange={handleOnChange}
+                handleChange={(e) => handleOnChange(e, resume, setResume)}
                 valueLabel="Cidade: " 
                 value={resume.address.city} 
                 messageError={validation && validation.city} 
@@ -372,14 +216,14 @@ const Resume = () => {
                 type="text"
                 id={`skills[${index}].nameSkill`}
                 name={`skills[${index}].nameSkill`}
-                onChange={(e) => handleSkillChange(e, index)}
+                onChange={(e) => handleSkillChange(e, index, skills, setSkills)}
                 value={skill.nameSkill}
                 placeholder={`Habilidade ${index + 1}`}
               />
               <br />
             </div>
           ))}
-          <button id="btn-add-skill" className={`btn btn-success ${styles.addButtons}`} type="button" onClick={addSkill}>
+          <button id="btn-add-skill" className={`btn btn-success ${styles.addButtons}`} type="button" onClick={() => addSkill(skills, setSkills)}>
           < BsPlusLg /> Habilidade
           </button>
         </div>
@@ -394,7 +238,7 @@ const Resume = () => {
               className="form-control"
                 type="text"
                 name={`schooling`}
-                onChange={(e) => handleAcademicChange(e, index)}
+                onChange={(e) => handleGenericListChange(e, index, academics, setAcademics)}
                 value={academic.schooling}
                 placeholder={`Nome da Formação`}
               />
@@ -403,7 +247,7 @@ const Resume = () => {
               className="form-control"
                 type="text"
                 name={`foundation`}
-                onChange={(e) => handleAcademicChange(e, index)}
+                onChange={(e) => handleGenericListChange(e, index, academics, setAcademics)}
                 value={academic.foundation}
                 placeholder={`Instituição`}
               />
@@ -412,7 +256,7 @@ const Resume = () => {
               className="form-control"
                 type="number"
                 name={`initialYear`}
-                onChange={(e) => handleAcademicChange(e, index)}
+                onChange={(e) => handleGenericListChange(e, index, academics, setAcademics)}
                 value={academic.initialYear}
                 placeholder={`Ano de Inicio`}
               />
@@ -421,14 +265,14 @@ const Resume = () => {
               className="form-control"
                 type="number"
                 name={`closingYear`}
-                onChange={(e) => handleAcademicChange(e, index)}
+                onChange={(e) => handleGenericListChange(e, index, academics, setAcademics)}
                 value={academic.closingYear}
                 placeholder={`Ano de Fim`}
               />
               <br />
             </div>
           ))}
-          <button id="btn-add-academic" className={`btn btn-success ${styles.addButtons}`} type="button" onClick={addAcademic}>
+          <button id="btn-add-academic" className={`btn btn-success ${styles.addButtons}`} type="button" onClick={() => addAcademic(academics, setAcademics)}>
           < BsPlusLg /> Formação 
           </button>
         </div>
@@ -443,7 +287,7 @@ const Resume = () => {
               className="form-control"
                 type="text"
                 name={`titleProject`}
-                onChange={(e) => handleProjectChange(e, index)}
+                onChange={(e) => handleGenericListChange(e, index, projects, setProjects)}
                 value={project.titleProject}
                 placeholder={`Nome do Projeto`}
               />
@@ -452,7 +296,7 @@ const Resume = () => {
               className="form-control"
                 type="text"
                 name={`foundation`}
-                onChange={(e) => handleProjectChange(e, index)}
+                onChange={(e) => handleGenericListChange(e, index, projects, setProjects)}
                 value={project.foundation}
                 placeholder={`Instituição`}
               />
@@ -461,7 +305,7 @@ const Resume = () => {
               className="form-control"
                 type="number"
                 name={`initialYear`}
-                onChange={(e) => handleProjectChange(e, index)}
+                onChange={(e) => handleGenericListChange(e, index, projects, setProjects)}
                 value={project.initialYear}
                 placeholder={`Ano de Inicio`}
               />
@@ -470,14 +314,14 @@ const Resume = () => {
               className="form-control"
                 type="number"
                 name={`closingYear`}
-                onChange={(e) => handleProjectChange(e, index)}
+                onChange={(e) => handleGenericListChange(e, index, projects, setProjects)}
                 value={project.closingYear}
                 placeholder={`Ano de Fim`}
               />
               <br />
             </div>
           ))}
-          <button id="btn-add-project" className={`btn btn-success ${styles.addButtons}`} type="button" onClick={addProject}>
+          <button id="btn-add-project" className={`btn btn-success ${styles.addButtons}`} type="button" onClick={() => addProject(projects, setProjects)}>
           < BsPlusLg /> Projeto
           </button>
         </div>
@@ -492,7 +336,7 @@ const Resume = () => {
               className="form-control"
                 type="text"
                 name={`functionName`}
-                onChange={(e) => handleExperienceChange(e, index)}
+                onChange={(e) => handleGenericListChange(e, index, experiences, setExperiences)}
                 value={experience.functionName}
                 placeholder={`Nome da Função`}
               />
@@ -501,7 +345,7 @@ const Resume = () => {
               className="form-control"
                 type="text"
                 name={`company`}
-                onChange={(e) => handleExperienceChange(e, index)}
+                onChange={(e) => handleGenericListChange(e, index, experiences, setExperiences)}
                 value={experience.company}
                 placeholder={`Empresa`}
               />
@@ -510,7 +354,7 @@ const Resume = () => {
               className="form-control"
                 type="number"
                 name={`initialYear`}
-                onChange={(e) => handleExperienceChange(e, index)}
+                onChange={(e) => handleGenericListChange(e, index, experiences, setExperiences)}
                 value={experience.initialYear}
                 placeholder={`Ano de Inicio`}
               />
@@ -519,14 +363,14 @@ const Resume = () => {
               className="form-control"
                 type="number"
                 name={`closingYear`}
-                onChange={(e) => handleExperienceChange(e, index)}
+                onChange={(e) => handleGenericListChange(e, index, experiences, setExperiences)}
                 value={experience.closingYear}
                 placeholder={`Ano de Fim`}
               />
               <br />
             </div>
           ))}
-          <button id="btn-add-experience" className={`btn btn-success ${styles.addButtons}`} type="button" onClick={addExperience}>
+          <button id="btn-add-experience" className={`btn btn-success ${styles.addButtons}`} type="button" onClick={() => addExperience(experiences, setExperiences)}>
           < BsPlusLg /> Experiência
           </button>
         </div>
@@ -541,7 +385,7 @@ const Resume = () => {
               className="form-control"
                 type="text"
                 name={`courseName`}
-                onChange={(e) => handleComplementaryCourseChange(e, index)}
+                onChange={(e) => handleGenericListChange(e, index, complementaryCourses, setComplementaryCourses)}
                 value={complementaryCourse.courseName}
                 placeholder={`Nome do curso`}
               />
@@ -550,7 +394,7 @@ const Resume = () => {
               className="form-control"
                 type="text"
                 name={`foundation`}
-                onChange={(e) => handleComplementaryCourseChange(e, index)}
+                onChange={(e) => handleGenericListChange(e, index, complementaryCourses, setComplementaryCourses)}
                 value={complementaryCourse.foundation}
                 placeholder={`Organização`}
               />
@@ -559,7 +403,7 @@ const Resume = () => {
               className="form-control"
                 type="number"
                 name={`initialYear`}
-                onChange={(e) => handleComplementaryCourseChange(e, index)}
+                onChange={(e) => handleGenericListChange(e, index, complementaryCourses, setComplementaryCourses)}
                 value={complementaryCourse.initialYear}
                 placeholder={`Ano de Inicio`}
               />
@@ -568,14 +412,14 @@ const Resume = () => {
               className="form-control"
                 type="number"
                 name={`closingYear`}
-                onChange={(e) => handleComplementaryCourseChange(e, index)}
+                onChange={(e) => handleGenericListChange(e, index, complementaryCourses, setComplementaryCourses)}
                 value={complementaryCourse.closingYear}
                 placeholder={`Ano de Fim`}
               />
               <br />
             </div>
           ))}
-          <button id="btn-add-complementaryCourse" className={`btn btn-success ${styles.addButtons}`} type="button" onClick={addComplementaryCourses}>
+          <button id="btn-add-complementaryCourse" className={`btn btn-success ${styles.addButtons}`} type="button" onClick={() => addComplementaryCourses(complementaryCourses, setComplementaryCourses)}>
           < BsPlusLg /> Curso Complementar
           </button>
         </div>
