@@ -311,10 +311,11 @@ const Resume = () => {
                 messageError={validation && validation.email}   
                 validationClass={validation && validation.email ? 'is-invalid' : ''} />
           <br />
-          <label>Nº Telefone:</label>
+          <label htmlFor="phoneNumber">Nº Telefone:</label>
           <InputMask mask="(99) 99999-9999"
                 name="contact.phone"
                 type="text"
+                id="phoneNumber"
                 placeholder="Digite seu número de telefone"
                 onChange={handleOnChange}
                 value={resume.contact.phone}
@@ -362,12 +363,14 @@ const Resume = () => {
         
         <div>
           <h5 className="fw-bold"><span>3</span>Habilidades</h5>
+          <p className={styles.instruction}><small><span>Instrução:</span> Habilidade em um currículo é uma capacidade específica que uma pessoa possui e pode aplicar em um ambiente de trabalho, você pode adicionar até <span>(5)</span> habilidades. Exemplos: <em>"Proatividade", "Facilidade de Aprendizado"</em></small></p>
           {skills.map((skill, index) => (
             <div key={index}>
               <label htmlFor={`skills[${index}].nameSkill`}><strong>{`Habilidade ${index + 1}`}:</strong></label>
               <input
               className="form-control"
                 type="text"
+                id={`skills[${index}].nameSkill`}
                 name={`skills[${index}].nameSkill`}
                 onChange={(e) => handleSkillChange(e, index)}
                 value={skill.nameSkill}
@@ -376,7 +379,6 @@ const Resume = () => {
               <br />
             </div>
           ))}
-          <br />
           <button id="btn-add-skill" className={`btn btn-success ${styles.addButtons}`} type="button" onClick={addSkill}>
           < BsPlusLg /> Habilidade
           </button>
@@ -384,6 +386,7 @@ const Resume = () => {
 
         <div>
           <h5 className="fw-bold"><span>4</span>Formações Acadêmicas</h5>
+          <p className={styles.instruction}><small><span>Instrução:</span> Formação Acadêmica em um currículo refere-se à educação formal que uma pessoa recebeu ao longo de sua vida acadêmica, você pode adicionar até <span>(3)</span> formações. Observação: Se você por acaso está ainda não terminou a sua formação, é interessante coloca-la e adicionar o ano de formação previsto. Exemplo: <em>"Ensino Médio" - "IFRN" - "2024" - "2028" </em></small></p>
           {academics.map((academic, index) => (
             <div key={index}>
               <p className="fw-bold">{`Formação ${index + 1}`}:</p>
@@ -425,7 +428,6 @@ const Resume = () => {
               <br />
             </div>
           ))}
-          <br />
           <button id="btn-add-academic" className={`btn btn-success ${styles.addButtons}`} type="button" onClick={addAcademic}>
           < BsPlusLg /> Formação 
           </button>
@@ -433,6 +435,7 @@ const Resume = () => {
 
         <div>
           <h5 className="fw-bold"><span>5</span>Projetos</h5>
+          <p className={styles.instruction}><small><span>Instrução:</span> Projeto em um currículo refere-se a trabalhos específicos, iniciativas ou empreendimentos nos quais você esteve envolvido, você pode adicionar até <span>(3)</span> projetos. Exemplo: <em>"Projeto Escola Conectada" - "IFRN" - "2022" - "2023"</em></small></p>
           {projects.map((project, index) => (
             <div key={index}>
               <p className="fw-bold">{`Projeto ${index + 1}`}:</p>
@@ -474,7 +477,6 @@ const Resume = () => {
               <br />
             </div>
           ))}
-          <br />
           <button id="btn-add-project" className={`btn btn-success ${styles.addButtons}`} type="button" onClick={addProject}>
           < BsPlusLg /> Projeto
           </button>
@@ -482,6 +484,7 @@ const Resume = () => {
 
         <div>
           <h5 className="fw-bold"><span>6</span>Experiências</h5>
+          <p className={styles.instruction}><small><span>Instrução:</span> Experiência em um currículo refere-se ao histórico de empregos, estágios ou trabalho voluntário que você esteve envolvido, você pode adicionar até <span>(5)</span> experiências. Exemplo: <em>"Atendente" - "Comércio Familiar" - "2023" - "2024"</em></small></p>
           {experiences.map((experience, index) => (
             <div key={index}>
               <p className="fw-bold">{`Experiência ${index + 1}`}:</p>
@@ -523,7 +526,6 @@ const Resume = () => {
               <br />
             </div>
           ))}
-          <br />
           <button id="btn-add-experience" className={`btn btn-success ${styles.addButtons}`} type="button" onClick={addExperience}>
           < BsPlusLg /> Experiência
           </button>
@@ -531,6 +533,7 @@ const Resume = () => {
 
         <div>
           <h5 className="fw-bold"><span>7</span>Cursos Complementares</h5>
+          <p className={styles.instruction}><small><span>Instrução:</span> Curso complementar em um currículo refere-se a qualquer formação adicional que você tenha realizado além de sua formação ou experiência, você pode adicionar até <span>(5)</span> cursos complementares. Exemplo: <em>"Excel do Básico ao Avançado" - "Udemy" - "2023" - "2023"</em></small></p>
           {complementaryCourses.map((complementaryCourse, index) => (
             <div key={index}>
               <p className="fw-bold">{`Curso ${index + 1}`}:</p>
@@ -572,14 +575,13 @@ const Resume = () => {
               <br />
             </div>
           ))}
-          <br />
           <button id="btn-add-complementaryCourse" className={`btn btn-success ${styles.addButtons}`} type="button" onClick={addComplementaryCourses}>
           < BsPlusLg /> Curso Complementar
           </button>
         </div>
 
         <div className="d-flex justify-content-end mt-5 gap-3">
-          <button id="btn-download-my-resume" className="btn btn-warning px-3" onClick={async() => { await downloadResumePDF(studentId, resumeId) }} ><FiDownloadCloud/><span></span></button>
+          <button id="btn-download-my-resume" className="btn btn-warning px-3" onClick={async() => { await downloadResumePDF(studentId, resumeId) }} data-toggle="tooltip" data-placement="top" title="Baixar currículo"><FiDownloadCloud/><span></span></button>
           <button id="btn-save-resume" type="submit" className={styles.buttonSave}><LuSave /> Salvar</button>
         </div>
       </form>

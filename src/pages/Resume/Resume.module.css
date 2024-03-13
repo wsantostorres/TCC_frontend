@@ -100,6 +100,17 @@
     font-size: 18px;
 }
 
+.instruction{
+    background-color: #545454;
+    color: #fff;
+    padding: 1rem;
+    border-radius: 5px;
+}
+
+.instruction span{
+    font-weight: bold;
+}
+
 /* responsive */
 @media(max-width: 600px){
 
