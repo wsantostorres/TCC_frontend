@@ -30,7 +30,6 @@ const Resume = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [resume, setResume] = useState({
-    objectiveDescription: "",
     projects: [],
     experiences: [],
     academics: [],
@@ -250,13 +249,7 @@ const Resume = () => {
     // Validar cidade
     if (!resume.address.city || resume.address.city.trim() === "") {
       errors.city = "A cidade é obrigatória.";
-    }
-
-    if(!resume.objectiveDescription || resume.objectiveDescription.trim() === ""){
-      errors.objectiveDescription = "O objetivo é obrigatório.";
-    }else if(resume.objectiveDescription.length > 500){
-      errors.objectiveDescription = "O objetivo não pode ter mais que 500 caracteres.";
-    }    
+    } 
   
     return errors;
   };
@@ -336,16 +329,6 @@ const Resume = () => {
                 value={resume.address.city} 
                 messageError={validation && validation.city} 
                 validationClass={validation && validation.city ? 'is-invalid' : ''} />
-        </div>
-
-        <div>
-          <h5 className="fw-bold"><span>3</span>Objetivo</h5>
-          <label htmlFor="objectiveDescription">Objetivo: </label>
-          <textarea name="objectiveDescription" id="objectiveDescription" 
-          className={validation && validation.objectiveDescription ? `form-control is-invalid` : `form-control`}
-          placeholder="Digite seu objetivo" onChange={(e) => handleOnChange(e)} 
-          value={resume.objectiveDescription} rows="5"></textarea>
-          {validation && validation.objectiveDescription && (<small className="invalid-feedback d-block fw-bold" >{validation.objectiveDescription}</small>)}
         </div>
         
         <div>
