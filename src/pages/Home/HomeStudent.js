@@ -245,7 +245,8 @@ const HomeStudent = () => {
                         type={vacancy.type} 
                         morning={vacancy.morning} 
                         afternoon={vacancy.afternoon} 
-                        night={vacancy.night} />
+                        night={vacancy.night} 
+                        quantityOfCandidatures={vacancy.quantityOfCandidatures}/>
                 ))}
             </section>
             {vacancies && vacancies.length === 0 && (

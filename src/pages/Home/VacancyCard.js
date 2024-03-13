@@ -13,7 +13,7 @@ import { AiOutlineSend } from 'react-icons/ai'
 import { BsCheckLg } from 'react-icons/bs';
 import { BiEdit } from 'react-icons/bi';
 
-const VacancyCard = ({id, title, description = "", date, type, morning, afternoon, night}) => {
+const VacancyCard = ({id, title, description = "", date, type, morning, afternoon, night, quantityOfCandidatures}) => {
 
     const { vacancyMessage, setVacancyMessage } = useMessage();
     const { id:studentId, bondType, studentVacancies } = useAuth();
@@ -87,6 +87,8 @@ const VacancyCard = ({id, title, description = "", date, type, morning, afternoo
         <div className={`${styles.card_vacancy} card`}>
             <div className="card-body d-flex flex-column justify-content-between">
                 <div className="mb-3">
+                    <small className="text-body-secondary fw-bold">{quantityOfCandidatures} Candidatura(s)</small>
+                    <br />
                     <h5 className="card-title fw-bold">{title}</h5>
                     <h6 className="card-subtitle mb-2 text-body-secondary">{type === 1 ? "Estágio" : "Jovem Aprendiz"}</h6>
                     <div className={`card-text ${styles.content_tinymce}`}>{parse(description)}</div>
