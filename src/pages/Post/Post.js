@@ -176,7 +176,7 @@ const Post = () => {
   }
   
   const handleDelete = async (id) => {
-    await deleteVacancy(id)
+    await deleteVacancy(id, authId)
   }
 
   // loading

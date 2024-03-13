@@ -185,26 +185,32 @@ export const useFetchVacancies = () => {
     });
   };
   
-  const deleteVacancy = async (id) => {
+  const deleteVacancy = async (id, employeeId) => {
     setVacancyLoading(true);
+
+      const data = {
+        employeeId: employeeId
+      }
   
-    try {
       await fetch(`${url}/vacancies/${id}`, {
         method: "DELETE",
         headers: {
           'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      }).then((response) => {
+        if(response.status === 200){
+          setVacancyMessage({msg: "Vaga excluída com sucesso.", type: "success" })
+          redirect("/");
+        }else{
+          throw new Error("Erro ao excluir")
         }
+      }).catch((error) => {
+        setVacancyMessage({msg:"Não foi possível excluir a vaga.", type:"error"})
       });
   
-      setVacancyMessage({msg: "Vaga excluída com sucesso.", type: "success" })
-      redirect("/");
-  
-    } catch (err) {
-      setVacancyMessage({msg:"Não foi possível excluir a vaga.", type:"error"})
-    }
-  
     setVacancyLoading(false);
-  };
+  }
 
   const sendResumeToVacancy = async(studentId, vacancyId) => {
     setVacancyLoading(true);
