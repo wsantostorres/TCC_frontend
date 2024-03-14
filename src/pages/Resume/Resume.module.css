@@ -59,16 +59,7 @@
     border-radius: 24px;
 }
 
-.addButtons {
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 4px;
-    transition: .5s ease-in-out;
-}
-
-.addButtons > svg{
+.iconAdd > svg{
     font-size: 20px;
 }
 

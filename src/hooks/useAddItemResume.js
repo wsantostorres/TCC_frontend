@@ -1,48 +1,71 @@
 export const useAddItemResume = () => {
 
-const addSkill = (skills, setSkills) => {
-    if (skills.length < 5) {
-      setSkills([...skills, { nameSkill: '' }]);
+  const addSkill = (skills, setSkills) => {
+
+    let itemsNotDeleted = skills.filter((skill) => skill.delete === false)
+  
+    if (itemsNotDeleted.length < 5) {
+      setSkills([...skills, { 
+        nameSkill: '',
+        delete: false 
+      }]);
     }
   };
 
   const addAcademic = (academics, setAcademics) => {
-    if (academics.length < 3) {
+
+    let itemsNotDeleted = academics.filter((academic) => academic.delete === false)
+
+    if (itemsNotDeleted.length < 3) {
       setAcademics([...academics, {
         schooling: '',
 			  foundation: '',
 			  initialYear: '',
-			  closingYear: '' }]);
+			  closingYear: '',
+        delete: false }]);
     }
   };
 
   const addProject = (projects, setProjects) => {
-    if (projects.length < 3) {
+
+    let itemsNotDeleted = projects.filter((project) => project.delete === false)
+
+    if (itemsNotDeleted.length < 3) {
       setProjects([...projects, {
         titleProject: '',
 			  foundation: '',
 			  initialYear: '',
-			  closingYear: '' }]);
+			  closingYear: '',
+        delete: false 
+      }]);
     }
   };
 
   const addExperience = (experiences, setExperiences) => {
-    if (experiences.length < 5) {
+
+    let itemsNotDeleted = experiences.filter((experience) => experience.delete === false)
+
+    if (itemsNotDeleted.length < 5) {
       setExperiences([...experiences, {
         functionName: '',
 			  company: '',
 			  initialYear: '',
-			  closingYear: '' }]);
+			  closingYear: '' ,
+        delete: false}]);
     }
   };
 
   const addComplementaryCourses = (complementaryCourses, setComplementaryCourses) => {
-    if (complementaryCourses.length < 5) {
+
+    let itemsNotDeleted = complementaryCourses.filter((complementaryCourse) => complementaryCourse.delete === false)
+
+    if (itemsNotDeleted.length < 5) {
       setComplementaryCourses([...complementaryCourses, {
         courseName: '',
 			  foundation: '',
 			  initialYear: '',
-			  closingYear: '' }]);
+			  closingYear: '',
+        delete: false}]);
     }
   };
 

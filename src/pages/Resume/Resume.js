@@ -7,7 +7,8 @@ import styles from './Resume.module.css';
 
 import { IoMdArrowRoundBack } from 'react-icons/io'
 import { LuSave } from 'react-icons/lu';
-import { BsPlusLg } from 'react-icons/bs';
+import { MdAddCircleOutline } from "react-icons/md";
+import { BsTrash } from 'react-icons/bs';
 import { FiDownloadCloud } from 'react-icons/fi';
 
 import { useMessage } from "../../contexts/MessageContext";
@@ -19,6 +20,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import { useHandleChangeResumes } from "../../hooks/useHandleChangeResumes";
 import { useAddItemResume } from "../../hooks/useAddItemResume";
 import { useValidationResume } from "../../hooks/useValidationResume";
+import { useRemoveItemResume } from "../../hooks/useRemoveItemResume";
 
 const Resume = () => {
 
@@ -28,6 +30,7 @@ const Resume = () => {
   const { resumeMessage, setResumeMessage } = useMessage();
   const { handleOnChange, handleSkillChange, handleGenericListChange } = useHandleChangeResumes();
   const { addSkill, addAcademic, addExperience, addProject, addComplementaryCourses} = useAddItemResume();
+  const { removeItem } = useRemoveItemResume();
   const { validateFields } = useValidationResume();
 
   // state
@@ -208,219 +211,288 @@ const Resume = () => {
         <div>
           <h5 className="fw-bold"><span>3</span>Habilidades</h5>
           <p className={styles.description}><small><span>Descrição:</span> Habilidade em um currículo é uma capacidade específica que uma pessoa possui e pode aplicar em um ambiente de trabalho, você pode adicionar até <span>(5)</span> habilidades. Exemplos: <em>"Proatividade", "Facilidade de Aprendizado"</em></small></p>
-          {skills.map((skill, index) => (
-            <div key={index}>
-              <label htmlFor={`skills[${index}].nameSkill`}><strong>{`Habilidade ${index + 1}`}:</strong></label>
-              <input
-              className="form-control"
-                type="text"
-                id={`skills[${index}].nameSkill`}
-                name={`skills[${index}].nameSkill`}
-                onChange={(e) => handleSkillChange(e, index, skills, setSkills)}
-                value={skill.nameSkill}
-                placeholder={`Habilidade ${index + 1}`}
-              />
-              <br />
-            </div>
-          ))}
-          <button id="btn-add-skill" className={`btn btn-success ${styles.addButtons}`} type="button" onClick={() => addSkill(skills, setSkills)}>
-          < BsPlusLg /> Habilidade
+          {skills.map((skill, index) => {
+            if(skill.delete === false){
+              return (
+                <div key={index}>
+
+                  { !skill.id ? (
+                    <p className="fw-bold">{`Nova Habilidade`}:</p>
+                  ) : (
+                    <p className="fw-bold">{`Habilidade ${index + 1}`}:</p>
+                  ) }
+
+                  <input
+                  className="form-control"
+                    type="text"
+                    onChange={(e) => handleSkillChange(e, index, skills, setSkills)}
+                    value={skill.nameSkill}
+                    placeholder={`Nome da Habilidade`}
+                  />
+                  <br />
+                  <button type="button" onClick={() => removeItem(index, skills, setSkills)} className="btn btn-sm btn-outline-danger d-flex align-items-center gap-1"><BsTrash />Remover</button>
+                  <br />
+                </div>
+              )
+            }
+
+            return null
+          })}
+          <button id="btn-add-skill" className={`btn btn-success d-flex align-items-center gap-1 ${styles.iconAdd}`}  type="button" onClick={() => addSkill(skills, setSkills)}>
+          <MdAddCircleOutline /> Habilidade
           </button>
         </div>
 
         <div>
           <h5 className="fw-bold"><span>4</span>Formações Acadêmicas</h5>
           <p className={styles.description}><small><span>Descrição:</span> Formação Acadêmica em um currículo refere-se à educação formal que você recebeu ao longo de sua vida acadêmica, você pode adicionar até <span>(3)</span> formações. Observação: Se você ainda não terminou a sua formação, é interessante inserir-la e adicionar o ano de formação previsto. Exemplo: <em>"Ensino Médio" - "IFRN" - "2024" - "2028" </em></small></p>
-          {academics.map((academic, index) => (
-            <div key={index}>
-              <p className="fw-bold">{`Formação ${index + 1}`}:</p>
-              <input
-              className="form-control"
-                type="text"
-                name={`schooling`}
-                onChange={(e) => handleGenericListChange(e, index, academics, setAcademics)}
-                value={academic.schooling}
-                placeholder={`Nome da Formação`}
-              />
-              <br />
-              <input
-              className="form-control"
-                type="text"
-                name={`foundation`}
-                onChange={(e) => handleGenericListChange(e, index, academics, setAcademics)}
-                value={academic.foundation}
-                placeholder={`Instituição`}
-              />
-              <br />
-              <input
-              className="form-control"
-                type="number"
-                name={`initialYear`}
-                onChange={(e) => handleGenericListChange(e, index, academics, setAcademics)}
-                value={academic.initialYear}
-                placeholder={`Ano de Inicio`}
-              />
-              <br />
-              <input
-              className="form-control"
-                type="number"
-                name={`closingYear`}
-                onChange={(e) => handleGenericListChange(e, index, academics, setAcademics)}
-                value={academic.closingYear}
-                placeholder={`Ano de Fim`}
-              />
-              <br />
-            </div>
-          ))}
-          <button id="btn-add-academic" className={`btn btn-success ${styles.addButtons}`} type="button" onClick={() => addAcademic(academics, setAcademics)}>
-          < BsPlusLg /> Formação 
+          {academics.map((academic, index) => { 
+            if(academic.delete === false){
+              return (
+                <div key={index}>
+
+                  { !academic.id ? (
+                    <p className="fw-bold">{`Nova Formação`}:</p>
+                  ) : (
+                    <p className="fw-bold">{`Formação ${index + 1}`}:</p>
+                  ) }
+              
+                  <input
+                  className="form-control"
+                    type="text"
+                    name={`schooling`}
+                    onChange={(e) => handleGenericListChange(e, index, academics, setAcademics)}
+                    value={academic.schooling}
+                    placeholder={`Nome da Formação`}
+                  />
+                  <br />
+                  <input
+                  className="form-control"
+                    type="text"
+                    name={`foundation`}
+                    onChange={(e) => handleGenericListChange(e, index, academics, setAcademics)}
+                    value={academic.foundation}
+                    placeholder={`Instituição`}
+                  />
+                  <br />
+                  <input
+                  className="form-control"
+                    type="number"
+                    name={`initialYear`}
+                    onChange={(e) => handleGenericListChange(e, index, academics, setAcademics)}
+                    value={academic.initialYear}
+                    placeholder={`Ano de Inicio`}
+                  />
+                  <br />
+                  <input
+                  className="form-control"
+                    type="number"
+                    name={`closingYear`}
+                    onChange={(e) => handleGenericListChange(e, index, academics, setAcademics)}
+                    value={academic.closingYear}
+                    placeholder={`Ano de Fim`}
+                  />
+                  <br />
+                  <button type="button" onClick={() => removeItem(index, academics, setAcademics)} className="btn btn-sm btn-outline-danger d-flex align-items-center gap-1"><BsTrash />Remover</button>
+                  <br />
+                </div>
+              )
+            }
+
+            return null
+          })}
+          <button id="btn-add-academic" className={`btn btn-success d-flex align-items-center gap-1 ${styles.iconAdd}`}  type="button" onClick={() => addAcademic(academics, setAcademics)}>
+          <MdAddCircleOutline /> Formação 
           </button>
         </div>
 
         <div>
           <h5 className="fw-bold"><span>5</span>Projetos</h5>
           <p className={styles.description}><small><span>Descrição:</span> Projeto em um currículo refere-se a trabalhos específicos, iniciativas ou empreendimentos nos quais você esteve envolvido, você pode adicionar até <span>(3)</span> projetos. Exemplo: <em>"Projeto Escola Conectada" - "IFRN" - "2022" - "2023"</em></small></p>
-          {projects.map((project, index) => (
-            <div key={index}>
-              <p className="fw-bold">{`Projeto ${index + 1}`}:</p>
-              <input
-              className="form-control"
-                type="text"
-                name={`titleProject`}
-                onChange={(e) => handleGenericListChange(e, index, projects, setProjects)}
-                value={project.titleProject}
-                placeholder={`Nome do Projeto`}
-              />
-              <br />
-              <input
-              className="form-control"
-                type="text"
-                name={`foundation`}
-                onChange={(e) => handleGenericListChange(e, index, projects, setProjects)}
-                value={project.foundation}
-                placeholder={`Instituição`}
-              />
-              <br />
-              <input
-              className="form-control"
-                type="number"
-                name={`initialYear`}
-                onChange={(e) => handleGenericListChange(e, index, projects, setProjects)}
-                value={project.initialYear}
-                placeholder={`Ano de Inicio`}
-              />
-              <br />
-              <input
-              className="form-control"
-                type="number"
-                name={`closingYear`}
-                onChange={(e) => handleGenericListChange(e, index, projects, setProjects)}
-                value={project.closingYear}
-                placeholder={`Ano de Fim`}
-              />
-              <br />
-            </div>
-          ))}
-          <button id="btn-add-project" className={`btn btn-success ${styles.addButtons}`} type="button" onClick={() => addProject(projects, setProjects)}>
-          < BsPlusLg /> Projeto
+          {projects.map((project, index) => {
+            if(project.delete === false) { 
+              return (
+                <div key={index}>
+
+                  { !project.id ? (
+                    <p className="fw-bold">{`Novo Projeto`}:</p>
+                  ) : (
+                    <p className="fw-bold">{`Projeto ${index + 1}`}:</p>
+                  ) }
+                  
+                  <input
+                  className="form-control"
+                    type="text"
+                    name={`titleProject`}
+                    onChange={(e) => handleGenericListChange(e, index, projects, setProjects)}
+                    value={project.titleProject}
+                    placeholder={`Nome do Projeto`}
+                  />
+                  <br />
+                  <input
+                  className="form-control"
+                    type="text"
+                    name={`foundation`}
+                    onChange={(e) => handleGenericListChange(e, index, projects, setProjects)}
+                    value={project.foundation}
+                    placeholder={`Instituição`}
+                  />
+                  <br />
+                  <input
+                  className="form-control"
+                    type="number"
+                    name={`initialYear`}
+                    onChange={(e) => handleGenericListChange(e, index, projects, setProjects)}
+                    value={project.initialYear}
+                    placeholder={`Ano de Inicio`}
+                  />
+                  <br />
+                  <input
+                  className="form-control"
+                    type="number"
+                    name={`closingYear`}
+                    onChange={(e) => handleGenericListChange(e, index, projects, setProjects)}
+                    value={project.closingYear}
+                    placeholder={`Ano de Fim`}
+                  />
+                  <br />
+                  <button type="button" onClick={() => removeItem(index, projects, setProjects)} className="btn btn-sm btn-outline-danger d-flex align-items-center gap-1"><BsTrash />Remover</button>
+                  <br />
+                </div>
+              )
+            }
+
+            return null
+          })}
+          <button id="btn-add-project" className={`btn btn-success d-flex align-items-center gap-1 ${styles.iconAdd}`}  type="button" onClick={() => addProject(projects, setProjects)}>
+          <MdAddCircleOutline /> Projeto
           </button>
         </div>
 
         <div>
           <h5 className="fw-bold"><span>6</span>Experiências</h5>
           <p className={styles.description}><small><span>Descrição:</span> Experiência em um currículo refere-se ao histórico de empregos, estágios ou trabalho voluntário que você esteve envolvido, você pode adicionar até <span>(5)</span> experiências. Exemplo: <em>"Atendente" - "Comércio Familiar" - "2023" - "2024"</em></small></p>
-          {experiences.map((experience, index) => (
-            <div key={index}>
-              <p className="fw-bold">{`Experiência ${index + 1}`}:</p>
-              <input
-              className="form-control"
-                type="text"
-                name={`functionName`}
-                onChange={(e) => handleGenericListChange(e, index, experiences, setExperiences)}
-                value={experience.functionName}
-                placeholder={`Nome da Função`}
-              />
-              <br />
-              <input
-              className="form-control"
-                type="text"
-                name={`company`}
-                onChange={(e) => handleGenericListChange(e, index, experiences, setExperiences)}
-                value={experience.company}
-                placeholder={`Empresa`}
-              />
-              <br />
-              <input
-              className="form-control"
-                type="number"
-                name={`initialYear`}
-                onChange={(e) => handleGenericListChange(e, index, experiences, setExperiences)}
-                value={experience.initialYear}
-                placeholder={`Ano de Inicio`}
-              />
-              <br />
-              <input
-              className="form-control"
-                type="number"
-                name={`closingYear`}
-                onChange={(e) => handleGenericListChange(e, index, experiences, setExperiences)}
-                value={experience.closingYear}
-                placeholder={`Ano de Fim`}
-              />
-              <br />
-            </div>
-          ))}
-          <button id="btn-add-experience" className={`btn btn-success ${styles.addButtons}`} type="button" onClick={() => addExperience(experiences, setExperiences)}>
-          < BsPlusLg /> Experiência
+          {experiences.map((experience, index) => {
+            if(experience.delete === false){
+              return (
+                <div key={index}>
+
+                  { !experience.id ? (
+                    <p className="fw-bold">{`Nova Experiência`}:</p>
+                  ) : (
+                    <p className="fw-bold">{`Experiência ${index + 1}`}:</p>
+                  ) }
+
+                  <input
+                  className="form-control"
+                    type="text"
+                    name={`functionName`}
+                    onChange={(e) => handleGenericListChange(e, index, experiences, setExperiences)}
+                    value={experience.functionName}
+                    placeholder={`Nome da Função`}
+                  />
+                  <br />
+                  <input
+                  className="form-control"
+                    type="text"
+                    name={`company`}
+                    onChange={(e) => handleGenericListChange(e, index, experiences, setExperiences)}
+                    value={experience.company}
+                    placeholder={`Empresa`}
+                  />
+                  <br />
+                  <input
+                  className="form-control"
+                    type="number"
+                    name={`initialYear`}
+                    onChange={(e) => handleGenericListChange(e, index, experiences, setExperiences)}
+                    value={experience.initialYear}
+                    placeholder={`Ano de Inicio`}
+                  />
+                  <br />
+                  <input
+                  className="form-control"
+                    type="number"
+                    name={`closingYear`}
+                    onChange={(e) => handleGenericListChange(e, index, experiences, setExperiences)}
+                    value={experience.closingYear}
+                    placeholder={`Ano de Fim`}
+                  />
+                  <br />
+                  <button type="button" onClick={() => removeItem(index, experiences, setExperiences)} className="btn btn-sm btn-outline-danger d-flex align-items-center gap-1"><BsTrash />Remover</button>
+                  <br />
+              </div>
+              )
+            }
+
+            return null
+          })}
+          <button id="btn-add-experience" className={`btn btn-success d-flex align-items-center gap-1 ${styles.iconAdd}`}  type="button" onClick={() => addExperience(experiences, setExperiences)}>
+          <MdAddCircleOutline /> Experiência
           </button>
         </div>
 
         <div>
           <h5 className="fw-bold"><span>7</span>Cursos Complementares</h5>
           <p className={styles.description}><small><span>Descrição:</span> Curso complementar em um currículo refere-se a qualquer formação adicional que você tenha realizado além de sua formação ou experiência, você pode adicionar até <span>(5)</span> cursos complementares. Exemplo: <em>"Excel do Básico ao Avançado" - "Udemy" - "2023" - "2023"</em></small></p>
-          {complementaryCourses.map((complementaryCourse, index) => (
-            <div key={index}>
-              <p className="fw-bold">{`Curso ${index + 1}`}:</p>
-              <input
-              className="form-control"
-                type="text"
-                name={`courseName`}
-                onChange={(e) => handleGenericListChange(e, index, complementaryCourses, setComplementaryCourses)}
-                value={complementaryCourse.courseName}
-                placeholder={`Nome do curso`}
-              />
-              <br />
-              <input
-              className="form-control"
-                type="text"
-                name={`foundation`}
-                onChange={(e) => handleGenericListChange(e, index, complementaryCourses, setComplementaryCourses)}
-                value={complementaryCourse.foundation}
-                placeholder={`Organização`}
-              />
-              <br />
-              <input
-              className="form-control"
-                type="number"
-                name={`initialYear`}
-                onChange={(e) => handleGenericListChange(e, index, complementaryCourses, setComplementaryCourses)}
-                value={complementaryCourse.initialYear}
-                placeholder={`Ano de Inicio`}
-              />
-              <br />
-              <input
-              className="form-control"
-                type="number"
-                name={`closingYear`}
-                onChange={(e) => handleGenericListChange(e, index, complementaryCourses, setComplementaryCourses)}
-                value={complementaryCourse.closingYear}
-                placeholder={`Ano de Fim`}
-              />
-              <br />
-            </div>
-          ))}
-          <button id="btn-add-complementaryCourse" className={`btn btn-success ${styles.addButtons}`} type="button" onClick={() => addComplementaryCourses(complementaryCourses, setComplementaryCourses)}>
-          < BsPlusLg /> Curso Complementar
+          {complementaryCourses.map((complementaryCourse, index) => {
+
+            if(complementaryCourse.delete === false){
+              return (
+                <div key={index}>
+
+                  { !complementaryCourse.id ? (
+                    <p className="fw-bold">{`Novo Curso`}:</p>
+                  ) : (
+                    <p className="fw-bold">{`Curso ${index + 1}`}:</p>
+                  ) }
+                  
+                  <input
+                  className="form-control"
+                    type="text"
+                    name={`courseName`}
+                    onChange={(e) => handleGenericListChange(e, index, complementaryCourses, setComplementaryCourses)}
+                    value={complementaryCourse.courseName}
+                    placeholder={`Nome do curso`}
+                  />
+                  <br />
+                  <input
+                  className="form-control"
+                    type="text"
+                    name={`foundation`}
+                    onChange={(e) => handleGenericListChange(e, index, complementaryCourses, setComplementaryCourses)}
+                    value={complementaryCourse.foundation}
+                    placeholder={`Organização`}
+                  />
+                  <br />
+                  <input
+                  className="form-control"
+                    type="number"
+                    name={`initialYear`}
+                    onChange={(e) => handleGenericListChange(e, index, complementaryCourses, setComplementaryCourses)}
+                    value={complementaryCourse.initialYear}
+                    placeholder={`Ano de Inicio`}
+                  />
+                  <br />
+                  <input
+                  className="form-control"
+                    type="number"
+                    name={`closingYear`}
+                    onChange={(e) => handleGenericListChange(e, index, complementaryCourses, setComplementaryCourses)}
+                    value={complementaryCourse.closingYear}
+                    placeholder={`Ano de Fim`}
+                  />
+                  <br />
+                  <button type="button" onClick={() => removeItem(index, complementaryCourses, setComplementaryCourses)} className="btn btn-sm btn-outline-danger d-flex align-items-center gap-1"><BsTrash />Remover</button>
+                  <br />
+                </div>
+              )
+            }
+
+            return null
+          })}
+          <button id="btn-add-complementaryCourse" className={`btn btn-success d-flex align-items-center gap-1 ${styles.iconAdd}`}  type="button" onClick={() => addComplementaryCourses(complementaryCourses, setComplementaryCourses)}>
+          <MdAddCircleOutline /> Curso Complementar
           </button>
         </div>
 

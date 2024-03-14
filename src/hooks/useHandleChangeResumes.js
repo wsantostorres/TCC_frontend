@@ -19,13 +19,13 @@ export const useHandleChangeResumes = () => {
     const handleSkillChange = (e, index, item, setItem) => {
         const { value } = e.target;
         const updatedSkills = [...item];
-    
+        
         if (updatedSkills[index].id) {
-          updatedSkills[index] = { id: updatedSkills[index].id, nameSkill: value };
+          updatedSkills[index] = { id: updatedSkills[index].id, nameSkill: value, delete: false };
         } else {
-          updatedSkills[index] = { nameSkill: value };
+          updatedSkills[index] = { ...updatedSkills[index], nameSkill: value };
         }
-    
+
         setItem(updatedSkills);
     };
 
