@@ -103,7 +103,7 @@ const Resume = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    const errors = validateFields(resume);
+    const errors = validateFields(resume, skills, academics, projects, experiences, complementaryCourses);
 
     if (Object.keys(errors).length > 0) {
       setTitleErrorValidation("Verifique os campos do formulário.")
@@ -223,12 +223,13 @@ const Resume = () => {
                   ) }
 
                   <input
-                  className="form-control"
+                    className={`form-control ${validation && validation[`skill_${index}`] ? "is-invalid" : ''}`}
                     type="text"
                     onChange={(e) => handleSkillChange(e, index, skills, setSkills)}
                     value={skill.nameSkill}
                     placeholder={`Nome da Habilidade`}
                   />
+                  {validation && validation[`skill_${index}`] && (<small className="invalid-feedback d-block fw-bold" >{validation[`skill_${index}`]}</small>)}
                   <br />
                   <button type="button" onClick={() => removeItem(index, skills, setSkills)} className="btn btn-sm btn-outline-danger d-flex align-items-center gap-1"><BsTrash />Remover</button>
                   <br />
@@ -258,40 +259,44 @@ const Resume = () => {
                   ) }
               
                   <input
-                  className="form-control"
+                    className={`form-control ${validation && validation[`academic_${index}_schooling`] ? "is-invalid" : ''}`}
                     type="text"
                     name={`schooling`}
                     onChange={(e) => handleGenericListChange(e, index, academics, setAcademics)}
                     value={academic.schooling}
                     placeholder={`Nome da Formação`}
                   />
+                  {validation && validation[`academic_${index}_schooling`] && (<small className="invalid-feedback d-block fw-bold" >{validation[`academic_${index}_schooling`]}</small>)}
                   <br />
                   <input
-                  className="form-control"
+                    className={`form-control ${validation && validation[`academic_${index}_foundation`] ? "is-invalid" : ''}`}
                     type="text"
                     name={`foundation`}
                     onChange={(e) => handleGenericListChange(e, index, academics, setAcademics)}
                     value={academic.foundation}
                     placeholder={`Instituição`}
                   />
+                  {validation && validation[`academic_${index}_foundation`] && (<small className="invalid-feedback d-block fw-bold" >{validation[`academic_${index}_foundation`]}</small>)}                  
                   <br />
                   <input
-                  className="form-control"
+                    className={`form-control ${validation && validation[`academic_${index}_initialYear`] ? "is-invalid" : ''}`}
                     type="number"
                     name={`initialYear`}
                     onChange={(e) => handleGenericListChange(e, index, academics, setAcademics)}
                     value={academic.initialYear}
                     placeholder={`Ano de Inicio`}
                   />
+                  {validation && validation[`academic_${index}_initialYear`] && (<small className="invalid-feedback d-block fw-bold" >{validation[`academic_${index}_initialYear`]}</small>)}
                   <br />
                   <input
-                  className="form-control"
+                    className={`form-control ${validation && validation[`academic_${index}_closingYear`] ? "is-invalid" : ''}`}
                     type="number"
                     name={`closingYear`}
                     onChange={(e) => handleGenericListChange(e, index, academics, setAcademics)}
                     value={academic.closingYear}
-                    placeholder={`Ano de Fim`}
+                    placeholder={`Ano de Conclusão`}
                   />
+                  {validation && validation[`academic_${index}_closingYear`] && (<small className="invalid-feedback d-block fw-bold" >{validation[`academic_${index}_closingYear`]}</small>)}
                   <br />
                   <button type="button" onClick={() => removeItem(index, academics, setAcademics)} className="btn btn-sm btn-outline-danger d-flex align-items-center gap-1"><BsTrash />Remover</button>
                   <br />
@@ -321,40 +326,44 @@ const Resume = () => {
                   ) }
                   
                   <input
-                  className="form-control"
+                  className={`form-control ${validation && validation[`project_${index}_titleProject`] ? "is-invalid" : ''}`}
                     type="text"
                     name={`titleProject`}
                     onChange={(e) => handleGenericListChange(e, index, projects, setProjects)}
                     value={project.titleProject}
                     placeholder={`Nome do Projeto`}
                   />
+                  {validation && validation[`project_${index}_titleProject`] && (<small className="invalid-feedback d-block fw-bold" >{validation[`project_${index}_titleProject`]}</small>)}
                   <br />
                   <input
-                  className="form-control"
+                  className={`form-control ${validation && validation[`project_${index}_foundation`] ? "is-invalid" : ''}`}
                     type="text"
                     name={`foundation`}
                     onChange={(e) => handleGenericListChange(e, index, projects, setProjects)}
                     value={project.foundation}
                     placeholder={`Instituição`}
                   />
+                  {validation && validation[`project_${index}_foundation`] && (<small className="invalid-feedback d-block fw-bold" >{validation[`project_${index}_foundation`]}</small>)}
                   <br />
                   <input
-                  className="form-control"
+                  className={`form-control ${validation && validation[`project_${index}_initialYear`] ? "is-invalid" : ''}`}
                     type="number"
                     name={`initialYear`}
                     onChange={(e) => handleGenericListChange(e, index, projects, setProjects)}
                     value={project.initialYear}
                     placeholder={`Ano de Inicio`}
                   />
+                  {validation && validation[`project_${index}_initialYear`] && (<small className="invalid-feedback d-block fw-bold" >{validation[`project_${index}_initialYear`]}</small>)}
                   <br />
                   <input
-                  className="form-control"
+                    className={`form-control ${validation && validation[`project_${index}_closingYear`] ? "is-invalid" : ''}`}
                     type="number"
                     name={`closingYear`}
                     onChange={(e) => handleGenericListChange(e, index, projects, setProjects)}
                     value={project.closingYear}
-                    placeholder={`Ano de Fim`}
+                    placeholder={`Ano de Conclusão`}
                   />
+                  {validation && validation[`project_${index}_closingYear`] && (<small className="invalid-feedback d-block fw-bold" >{validation[`project_${index}_closingYear`]}</small>)}
                   <br />
                   <button type="button" onClick={() => removeItem(index, projects, setProjects)} className="btn btn-sm btn-outline-danger d-flex align-items-center gap-1"><BsTrash />Remover</button>
                   <br />
@@ -384,40 +393,44 @@ const Resume = () => {
                   ) }
 
                   <input
-                  className="form-control"
+                    className={`form-control ${validation && validation[`experience_${index}_functionName`] ? "is-invalid" : ''}`}
                     type="text"
                     name={`functionName`}
                     onChange={(e) => handleGenericListChange(e, index, experiences, setExperiences)}
                     value={experience.functionName}
                     placeholder={`Nome da Função`}
                   />
+                  {validation && validation[`experience_${index}_functionName`] && (<small className="invalid-feedback d-block fw-bold" >{validation[`experience_${index}_functionName`]}</small>)}
                   <br />
                   <input
-                  className="form-control"
+                    className={`form-control ${validation && validation[`experience_${index}_company`] ? "is-invalid" : ''}`}
                     type="text"
                     name={`company`}
                     onChange={(e) => handleGenericListChange(e, index, experiences, setExperiences)}
                     value={experience.company}
                     placeholder={`Empresa`}
                   />
+                  {validation && validation[`experience_${index}_company`] && (<small className="invalid-feedback d-block fw-bold" >{validation[`experience_${index}_company`]}</small>)}
                   <br />
                   <input
-                  className="form-control"
+                    className={`form-control ${validation && validation[`experience_${index}_initialYear`] ? "is-invalid" : ''}`}
                     type="number"
                     name={`initialYear`}
                     onChange={(e) => handleGenericListChange(e, index, experiences, setExperiences)}
                     value={experience.initialYear}
                     placeholder={`Ano de Inicio`}
                   />
+                  {validation && validation[`experience_${index}_initialYear`] && (<small className="invalid-feedback d-block fw-bold" >{validation[`experience_${index}_initialYear`]}</small>)}
                   <br />
                   <input
-                  className="form-control"
+                    className={`form-control ${validation && validation[`experience_${index}_closingYear`] ? "is-invalid" : ''}`}
                     type="number"
                     name={`closingYear`}
                     onChange={(e) => handleGenericListChange(e, index, experiences, setExperiences)}
                     value={experience.closingYear}
-                    placeholder={`Ano de Fim`}
+                    placeholder={`Ano de Conclusão`}
                   />
+                  {validation && validation[`experience_${index}_closingYear`] && (<small className="invalid-feedback d-block fw-bold" >{validation[`experience_${index}_closingYear`]}</small>)}
                   <br />
                   <button type="button" onClick={() => removeItem(index, experiences, setExperiences)} className="btn btn-sm btn-outline-danger d-flex align-items-center gap-1"><BsTrash />Remover</button>
                   <br />
@@ -448,40 +461,44 @@ const Resume = () => {
                   ) }
                   
                   <input
-                  className="form-control"
+                    className={`form-control ${validation && validation[`complementaryCourse_${index}_courseName`] ? "is-invalid" : ''}`}
                     type="text"
                     name={`courseName`}
                     onChange={(e) => handleGenericListChange(e, index, complementaryCourses, setComplementaryCourses)}
                     value={complementaryCourse.courseName}
                     placeholder={`Nome do curso`}
                   />
+                  {validation && validation[`complementaryCourse_${index}_courseName`] && (<small className="invalid-feedback d-block fw-bold" >{validation[`complementaryCourse_${index}_courseName`]}</small>)}
                   <br />
                   <input
-                  className="form-control"
+                    className={`form-control ${validation && validation[`complementaryCourse_${index}_foundation`] ? "is-invalid" : ''}`}
                     type="text"
                     name={`foundation`}
                     onChange={(e) => handleGenericListChange(e, index, complementaryCourses, setComplementaryCourses)}
                     value={complementaryCourse.foundation}
                     placeholder={`Organização`}
                   />
+                  {validation && validation[`complementaryCourse_${index}_foundation`] && (<small className="invalid-feedback d-block fw-bold" >{validation[`complementaryCourse_${index}_foundation`]}</small>)}
                   <br />
                   <input
-                  className="form-control"
+                    className={`form-control ${validation && validation[`complementaryCourse_${index}_initialYear`] ? "is-invalid" : ''}`}
                     type="number"
                     name={`initialYear`}
                     onChange={(e) => handleGenericListChange(e, index, complementaryCourses, setComplementaryCourses)}
                     value={complementaryCourse.initialYear}
                     placeholder={`Ano de Inicio`}
                   />
+                  {validation && validation[`complementaryCourse_${index}_initialYear`] && (<small className="invalid-feedback d-block fw-bold" >{validation[`complementaryCourse_${index}_initialYear`]}</small>)}
                   <br />
                   <input
-                  className="form-control"
+                    className={`form-control ${validation && validation[`complementaryCourse_${index}_closingYear`] ? "is-invalid" : ''}`}
                     type="number"
                     name={`closingYear`}
                     onChange={(e) => handleGenericListChange(e, index, complementaryCourses, setComplementaryCourses)}
                     value={complementaryCourse.closingYear}
-                    placeholder={`Ano de Fim`}
+                    placeholder={`Ano de Conclusão`}
                   />
+                  {validation && validation[`complementaryCourse_${index}_closingYear`] && (<small className="invalid-feedback d-block fw-bold" >{validation[`complementaryCourse_${index}_closingYear`]}</small>)}
                   <br />
                   <button type="button" onClick={() => removeItem(index, complementaryCourses, setComplementaryCourses)} className="btn btn-sm btn-outline-danger d-flex align-items-center gap-1"><BsTrash />Remover</button>
                   <br />
