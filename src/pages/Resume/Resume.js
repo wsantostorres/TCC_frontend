@@ -324,7 +324,7 @@ const Resume = () => {
 
         <div>
           <h5 className="fw-bold"><span>5</span>Projetos</h5>
-          <p className={styles.description}><small><span>Descrição:</span> Projeto em um currículo refere-se a trabalhos específicos, iniciativas ou empreendimentos nos quais você esteve envolvido, você pode adicionar até <span>(3)</span> projetos. Exemplo: <em>"Projeto Escola Conectada" - "IFRN" - "2022" - "2023"</em></small></p>
+          <p className={styles.description}><small><span>Descrição:</span> Projeto em um currículo refere-se a trabalhos específicos, iniciativas ou empreendimentos nos quais você esteve envolvido, você pode adicionar até <span>(5)</span> projetos. Exemplo: <em>"Projeto Escola Conectada" - "IFRN" - "2022" - "2023"</em></small></p>
           {projects.map((project, index) => {
             if(project.delete === false) { 
               return (
@@ -404,7 +404,7 @@ const Resume = () => {
 
         <div>
           <h5 className="fw-bold"><span>6</span>Experiências</h5>
-          <p className={styles.description}><small><span>Descrição:</span> Experiência em um currículo refere-se ao histórico de empregos, estágios ou trabalho voluntário que você esteve envolvido, você pode adicionar até <span>(5)</span> experiências. Exemplo: <em>"Atendente" - "Comércio Familiar" - "2023" - "2024"</em></small></p>
+          <p className={styles.description}><small><span>Descrição:</span> Experiência em um currículo refere-se ao histórico de empregos, estágios ou trabalho voluntário que você esteve envolvido, você pode adicionar até <span>(3)</span> experiências. Exemplo: <em>"Atendente" - "Comércio Familiar" - "2023" - "2024"</em></small></p>
           {experiences.map((experience, index) => {
             if(experience.delete === false){
               return (
