@@ -106,6 +106,7 @@ const Resume = () => {
     const errors = validateFields(resume, skills, academics, projects, experiences, complementaryCourses);
 
     if (Object.keys(errors).length > 0) {
+      setSuccessMessage("")
       setTitleErrorValidation("Verifique os campos do formulário.")
       setValidation(errors);
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -335,6 +336,7 @@ const Resume = () => {
                   />
                   {validation && validation[`project_${index}_titleProject`] && (<small className="invalid-feedback d-block fw-bold" >{validation[`project_${index}_titleProject`]}</small>)}
                   <br />
+
                   <input
                   className={`form-control ${validation && validation[`project_${index}_foundation`] ? "is-invalid" : ''}`}
                     type="text"
@@ -345,6 +347,16 @@ const Resume = () => {
                   />
                   {validation && validation[`project_${index}_foundation`] && (<small className="invalid-feedback d-block fw-bold" >{validation[`project_${index}_foundation`]}</small>)}
                   <br />
+
+                  <textarea 
+                    name="activities" 
+                    className={`form-control ${validation && validation[`project_${index}_activities`] ? "is-invalid" : ''}`}
+                    placeholder="Resumo das atividades desempenhadas"
+                    onChange={(e) => handleGenericListChange(e, index, projects, setProjects)} 
+                    value={project.activities} rows="5"></textarea>
+                  {validation && validation[`project_${index}_activities`] && (<small className="invalid-feedback d-block fw-bold" >{validation[`project_${index}_activities`]}</small>)}
+                  <br />
+
                   <input
                   className={`form-control ${validation && validation[`project_${index}_initialYear`] ? "is-invalid" : ''}`}
                     type="number"
@@ -355,6 +367,7 @@ const Resume = () => {
                   />
                   {validation && validation[`project_${index}_initialYear`] && (<small className="invalid-feedback d-block fw-bold" >{validation[`project_${index}_initialYear`]}</small>)}
                   <br />
+
                   <input
                     className={`form-control ${validation && validation[`project_${index}_closingYear`] ? "is-invalid" : ''}`}
                     type="number"
@@ -365,6 +378,7 @@ const Resume = () => {
                   />
                   {validation && validation[`project_${index}_closingYear`] && (<small className="invalid-feedback d-block fw-bold" >{validation[`project_${index}_closingYear`]}</small>)}
                   <br />
+
                   <button type="button" onClick={() => removeItem(index, projects, setProjects)} className="btn btn-sm btn-outline-danger d-flex align-items-center gap-1"><BsTrash />Remover</button>
                   <br />
                 </div>
@@ -402,6 +416,7 @@ const Resume = () => {
                   />
                   {validation && validation[`experience_${index}_functionName`] && (<small className="invalid-feedback d-block fw-bold" >{validation[`experience_${index}_functionName`]}</small>)}
                   <br />
+
                   <input
                     className={`form-control ${validation && validation[`experience_${index}_company`] ? "is-invalid" : ''}`}
                     type="text"
@@ -412,6 +427,16 @@ const Resume = () => {
                   />
                   {validation && validation[`experience_${index}_company`] && (<small className="invalid-feedback d-block fw-bold" >{validation[`experience_${index}_company`]}</small>)}
                   <br />
+
+                  <textarea 
+                    name="activities" 
+                    className={`form-control ${validation && validation[`experience_${index}_activities`] ? "is-invalid" : ''}`}
+                    placeholder="Resumo das atividades desempenhadas" 
+                    onChange={(e) => handleGenericListChange(e, index, experiences, setExperiences)} 
+                    value={experience.activities} rows="5"></textarea>
+                  {validation && validation[`experience_${index}_activities`] && (<small className="invalid-feedback d-block fw-bold" >{validation[`experience_${index}_activities`]}</small>)}
+                  <br />
+
                   <input
                     className={`form-control ${validation && validation[`experience_${index}_initialYear`] ? "is-invalid" : ''}`}
                     type="number"
@@ -422,6 +447,7 @@ const Resume = () => {
                   />
                   {validation && validation[`experience_${index}_initialYear`] && (<small className="invalid-feedback d-block fw-bold" >{validation[`experience_${index}_initialYear`]}</small>)}
                   <br />
+
                   <input
                     className={`form-control ${validation && validation[`experience_${index}_closingYear`] ? "is-invalid" : ''}`}
                     type="number"
@@ -432,6 +458,7 @@ const Resume = () => {
                   />
                   {validation && validation[`experience_${index}_closingYear`] && (<small className="invalid-feedback d-block fw-bold" >{validation[`experience_${index}_closingYear`]}</small>)}
                   <br />
+
                   <button type="button" onClick={() => removeItem(index, experiences, setExperiences)} className="btn btn-sm btn-outline-danger d-flex align-items-center gap-1"><BsTrash />Remover</button>
                   <br />
               </div>

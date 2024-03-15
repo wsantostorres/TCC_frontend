@@ -80,6 +80,14 @@ export const useValidationResume = () => {
         if(project.closingYear === ""){
           errors[`project_${index}_closingYear`] = "O ano de conclusão não pode ser vazio."
         }
+
+        if(project.activities === ""){
+          errors[`project_${index}_activities`] = "As atividades não podem ser vazias."
+        }
+
+        if(project.activities.length > 200){
+          errors[`project_${index}_activities`] = "A quantidade de caracteres não pode ser maior que 200."
+        }
       }
 
     });
@@ -102,6 +110,14 @@ export const useValidationResume = () => {
 
         if(experience.closingYear === ""){
           errors[`experience_${index}_closingYear`] = "O ano de conclusão não pode ser vazio."
+        }
+
+        if(experience.activities === ""){
+          errors[`experience_${index}_activities`] = "As atividades não podem ser vazias."
+        }
+
+        if(experience.activities.length > 200){
+          errors[`experience_${index}_activities`] = "A quantidade de caracteres não pode ser maior que 200."
         }
       }
 

@@ -36,6 +36,7 @@ export const useAddItemResume = () => {
 			  foundation: '',
 			  initialYear: '',
 			  closingYear: '',
+        activities: '',
         delete: false 
       }]);
     }
@@ -50,7 +51,8 @@ export const useAddItemResume = () => {
         functionName: '',
 			  company: '',
 			  initialYear: '',
-			  closingYear: '' ,
+			  closingYear: '',
+        activities: '',
         delete: false}]);
     }
   };
