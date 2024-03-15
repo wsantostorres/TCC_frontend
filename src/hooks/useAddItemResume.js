@@ -30,7 +30,7 @@ export const useAddItemResume = () => {
 
     let itemsNotDeleted = projects.filter((project) => project.delete === false)
 
-    if (itemsNotDeleted.length < 3) {
+    if (itemsNotDeleted.length < 5) {
       setProjects([...projects, {
         titleProject: '',
 			  foundation: '',
@@ -46,7 +46,7 @@ export const useAddItemResume = () => {
 
     let itemsNotDeleted = experiences.filter((experience) => experience.delete === false)
 
-    if (itemsNotDeleted.length < 5) {
+    if (itemsNotDeleted.length < 3) {
       setExperiences([...experiences, {
         functionName: '',
 			  company: '',
