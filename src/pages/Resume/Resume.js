@@ -159,6 +159,7 @@ const Resume = () => {
                 messageError={validation && validation.email}   
                 validationClass={validation && validation.email ? 'is-invalid' : ''} />
           <br />
+
           <label htmlFor="phoneNumber">Nº Telefone:</label>
           <InputMask mask="(99) 99999-9999"
                 name="contact.phone"
@@ -170,6 +171,7 @@ const Resume = () => {
                 className={`form-control ${validation && validation.phone ? "is-invalid" : ""}`} />
                 {validation && validation.phone && (<small className="invalid-feedback d-block fw-bold" >{validation.phone}</small>)}
           <br />
+
           <Input name="contact.linkedin"
                 type="text" 
                 placeholder="Digite seu linkedin" 
@@ -179,6 +181,7 @@ const Resume = () => {
                 messageError="" 
                 validationClass="" />
         </div>
+
         <div>
           <h5 className="fw-bold"><span>2</span>Endereço</h5>
           <Input name="address.street"
@@ -190,6 +193,7 @@ const Resume = () => {
                 messageError={validation && validation.street}   
                 validationClass={validation && validation.street ? 'is-invalid' : ''} />
           <br />
+
           <Input name="address.number"
                 type="number" 
                 placeholder="Nº da Casa" 
@@ -199,6 +203,7 @@ const Resume = () => {
                 messageError={validation && validation.number}  
                 validationClass={validation && validation.number ? 'is-invalid' : ''} />
           <br />
+
           <Input name="address.city"
                 type="text" 
                 placeholder="Sua cidade" 
@@ -232,6 +237,7 @@ const Resume = () => {
                   />
                   {validation && validation[`skill_${index}`] && (<small className="invalid-feedback d-block fw-bold" >{validation[`skill_${index}`]}</small>)}
                   <br />
+
                   <button type="button" onClick={() => removeItem(index, skills, setSkills)} className="btn btn-sm btn-outline-danger d-flex align-items-center gap-1"><BsTrash />Remover</button>
                   <br />
                 </div>
@@ -269,6 +275,7 @@ const Resume = () => {
                   />
                   {validation && validation[`academic_${index}_schooling`] && (<small className="invalid-feedback d-block fw-bold" >{validation[`academic_${index}_schooling`]}</small>)}
                   <br />
+
                   <input
                     className={`form-control ${validation && validation[`academic_${index}_foundation`] ? "is-invalid" : ''}`}
                     type="text"
@@ -279,6 +286,7 @@ const Resume = () => {
                   />
                   {validation && validation[`academic_${index}_foundation`] && (<small className="invalid-feedback d-block fw-bold" >{validation[`academic_${index}_foundation`]}</small>)}                  
                   <br />
+
                   <input
                     className={`form-control ${validation && validation[`academic_${index}_initialYear`] ? "is-invalid" : ''}`}
                     type="number"
@@ -289,6 +297,7 @@ const Resume = () => {
                   />
                   {validation && validation[`academic_${index}_initialYear`] && (<small className="invalid-feedback d-block fw-bold" >{validation[`academic_${index}_initialYear`]}</small>)}
                   <br />
+
                   <input
                     className={`form-control ${validation && validation[`academic_${index}_closingYear`] ? "is-invalid" : ''}`}
                     type="number"
@@ -299,6 +308,7 @@ const Resume = () => {
                   />
                   {validation && validation[`academic_${index}_closingYear`] && (<small className="invalid-feedback d-block fw-bold" >{validation[`academic_${index}_closingYear`]}</small>)}
                   <br />
+
                   <button type="button" onClick={() => removeItem(index, academics, setAcademics)} className="btn btn-sm btn-outline-danger d-flex align-items-center gap-1"><BsTrash />Remover</button>
                   <br />
                 </div>
@@ -497,6 +507,7 @@ const Resume = () => {
                   />
                   {validation && validation[`complementaryCourse_${index}_courseName`] && (<small className="invalid-feedback d-block fw-bold" >{validation[`complementaryCourse_${index}_courseName`]}</small>)}
                   <br />
+
                   <input
                     className={`form-control ${validation && validation[`complementaryCourse_${index}_foundation`] ? "is-invalid" : ''}`}
                     type="text"
@@ -507,6 +518,7 @@ const Resume = () => {
                   />
                   {validation && validation[`complementaryCourse_${index}_foundation`] && (<small className="invalid-feedback d-block fw-bold" >{validation[`complementaryCourse_${index}_foundation`]}</small>)}
                   <br />
+
                   <input
                     className={`form-control ${validation && validation[`complementaryCourse_${index}_initialYear`] ? "is-invalid" : ''}`}
                     type="number"
@@ -517,6 +529,7 @@ const Resume = () => {
                   />
                   {validation && validation[`complementaryCourse_${index}_initialYear`] && (<small className="invalid-feedback d-block fw-bold" >{validation[`complementaryCourse_${index}_initialYear`]}</small>)}
                   <br />
+
                   <input
                     className={`form-control ${validation && validation[`complementaryCourse_${index}_closingYear`] ? "is-invalid" : ''}`}
                     type="number"
@@ -527,6 +540,7 @@ const Resume = () => {
                   />
                   {validation && validation[`complementaryCourse_${index}_closingYear`] && (<small className="invalid-feedback d-block fw-bold" >{validation[`complementaryCourse_${index}_closingYear`]}</small>)}
                   <br />
+                  
                   <button type="button" onClick={() => removeItem(index, complementaryCourses, setComplementaryCourses)} className="btn btn-sm btn-outline-danger d-flex align-items-center gap-1"><BsTrash />Remover</button>
                   <br />
                 </div>

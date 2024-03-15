@@ -57,6 +57,14 @@ export const useValidationResume = () => {
         if(academic.closingYear === ""){
           errors[`academic_${index}_closingYear`] = "O ano de conclusão não pode ser vazio."
         }
+
+        if(academic.initialYear.length > 4){
+          errors[`academic_${index}_initialYear`] = "O ano de início não pode ser maior que 4 caracteres."
+        }
+
+        if(academic.closingYear.length > 4){
+          errors[`academic_${index}_closingYear`] = "O ano de conclusão não pode ser maior que 4 caracteres."
+        }
       }
 
     });
@@ -81,6 +89,14 @@ export const useValidationResume = () => {
           errors[`project_${index}_closingYear`] = "O ano de conclusão não pode ser vazio."
         }
 
+        if(project.initialYear.length > 4){
+          errors[`project_${index}_initialYear`] = "O ano de início não pode ser maior que 4 caracteres."
+        }
+
+        if(project.closingYear.length > 4){
+          errors[`project_${index}_closingYear`] = "O ano de conclusão não pode ser maior que 4 caracteres."
+        }
+
         if(project.activities === ""){
           errors[`project_${index}_activities`] = "As atividades não podem ser vazias."
         }
@@ -88,6 +104,7 @@ export const useValidationResume = () => {
         if(project.activities.length > 200){
           errors[`project_${index}_activities`] = "A quantidade de caracteres não pode ser maior que 200."
         }
+        
       }
 
     });
@@ -110,6 +127,14 @@ export const useValidationResume = () => {
 
         if(experience.closingYear === ""){
           errors[`experience_${index}_closingYear`] = "O ano de conclusão não pode ser vazio."
+        }
+
+        if(experience.initialYear.length > 4){
+          errors[`experience_${index}_initialYear`] = "O ano de início não pode ser maior que 4 caracteres."
+        }
+
+        if(experience.closingYear.length > 4){
+          errors[`experience_${index}_closingYear`] = "O ano de conclusão não pode ser maior que 4 caracteres."
         }
 
         if(experience.activities === ""){
@@ -141,6 +166,14 @@ export const useValidationResume = () => {
   
         if(complementaryCourse.closingYear === ""){
           errors[`complementaryCourse_${index}_closingYear`] = "O ano de conclusão não pode ser vazio."
+        }
+
+        if(complementaryCourse.initialYear.length > 4){
+          errors[`complementaryCourse_${index}_initialYear`] = "O ano de início não pode ser maior que 4 caracteres."
+        }
+
+        if(complementaryCourse.closingYear.length > 4){
+          errors[`complementaryCourse_${index}_closingYear`] = "O ano de conclusão não pode ser maior que 4 caracteres."
         }
       }
 
