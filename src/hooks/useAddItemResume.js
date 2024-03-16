@@ -16,7 +16,7 @@ export const useAddItemResume = () => {
 
     let itemsNotDeleted = academics.filter((academic) => academic.delete === false)
 
-    if (itemsNotDeleted.length < 3) {
+    if (itemsNotDeleted.length < 2) {
       setAcademics([...academics, {
         schooling: '',
 			  foundation: '',
@@ -30,7 +30,7 @@ export const useAddItemResume = () => {
 
     let itemsNotDeleted = projects.filter((project) => project.delete === false)
 
-    if (itemsNotDeleted.length < 5) {
+    if (itemsNotDeleted.length < 2) {
       setProjects([...projects, {
         titleProject: '',
 			  foundation: '',
@@ -46,7 +46,7 @@ export const useAddItemResume = () => {
 
     let itemsNotDeleted = experiences.filter((experience) => experience.delete === false)
 
-    if (itemsNotDeleted.length < 3) {
+    if (itemsNotDeleted.length < 2) {
       setExperiences([...experiences, {
         functionName: '',
 			  company: '',
@@ -61,7 +61,7 @@ export const useAddItemResume = () => {
 
     let itemsNotDeleted = complementaryCourses.filter((complementaryCourse) => complementaryCourse.delete === false)
 
-    if (itemsNotDeleted.length < 5) {
+    if (itemsNotDeleted.length < 2) {
       setComplementaryCourses([...complementaryCourses, {
         courseName: '',
 			  foundation: '',

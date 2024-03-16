@@ -101,8 +101,8 @@ export const useValidationResume = () => {
           errors[`project_${index}_activities`] = "As atividades não podem ser vazias."
         }
 
-        if(project.activities.length > 200){
-          errors[`project_${index}_activities`] = "A quantidade de caracteres não pode ser maior que 200."
+        if(project.activities.length > 150){
+          errors[`project_${index}_activities`] = "A quantidade de caracteres não pode ser maior que 150."
         }
         
       }
@@ -141,8 +141,8 @@ export const useValidationResume = () => {
           errors[`experience_${index}_activities`] = "As atividades não podem ser vazias."
         }
 
-        if(experience.activities.length > 200){
-          errors[`experience_${index}_activities`] = "A quantidade de caracteres não pode ser maior que 200."
+        if(experience.activities.length > 150){
+          errors[`experience_${index}_activities`] = "A quantidade de caracteres não pode ser maior que 150."
         }
       }
 
