@@ -236,6 +236,9 @@ export const useFetchVacancies = () => {
       }else if(response.status === 423){
         setVacancyMessage({msg: "Cadastre seu currículo e tente novamente.", type: "send-resume-conflict"})
         setVacancyLoading(false);
+      }else if(response.status === 422){
+          setVacancyMessage({msg: "O período de envio de currículos para esta vaga foi encerrado.", type: "send-resume-error"})
+          setVacancyLoading(false);
       }else{
         throw new Error('Erro com o servidor');
       }

@@ -12,6 +12,7 @@ import { FiDownloadCloud } from 'react-icons/fi';
 import { AiOutlineSend } from 'react-icons/ai'
 import { BsCheckLg } from 'react-icons/bs';
 import { BiEdit } from 'react-icons/bi';
+import { FaRegClock } from "react-icons/fa";
 
 const VacancyCard = ({id, title, description = "", date, type, morning, afternoon, night, quantityOfCandidatures}) => {
 
@@ -82,6 +83,18 @@ const VacancyCard = ({id, title, description = "", date, type, morning, afternoo
         return formattedDate;
     }
 
+    const disableResumeSending = (vacancyDateString) => {    
+        vacancyDateString = vacancyDateString.split("/");  
+        let vacancyDate = new Date(vacancyDateString[2], vacancyDateString[1] - 1, vacancyDateString[0]);
+        vacancyDate.setHours(23);
+        vacancyDate.setMinutes(59);
+        if(vacancyDate < new Date()){
+            return true;
+        }
+
+        return false;
+    }
+
   return (
     <>
         <div className={`${styles.card_vacancy} card`}>
@@ -107,7 +120,11 @@ const VacancyCard = ({id, title, description = "", date, type, morning, afternoo
                         isApplied ? (
                             <button id="btn-send-resume-ok" type="button" className={styles.resumeSent}><BsCheckLg /> <span>Currículo Enviado</span></button>
                         ) : (
-                            <button id="btn-send-resume" className={styles.buttonSendResume} data-bs-toggle="modal" data-bs-target="#modalVacancy" onClick={async () => { await sendResumeToVacancy(studentId, id) }}><AiOutlineSend /> <span>Enviar Currículo</span></button>
+                            disableResumeSending(formatDate(date)) ? (
+                                <button id="btn-disable-resume" type="button" className={styles.disableResumeSending} ><FaRegClock /> <span>Encerrada</span></button>
+                            ) : (
+                                <button id="btn-send-resume" className={styles.buttonSendResume} data-bs-toggle="modal" data-bs-target="#modalVacancy" onClick={async () => { await sendResumeToVacancy(studentId, id) }}><AiOutlineSend /> <span>Enviar Currículo</span></button>
+                            )
                         )
                     )}
                 </div>
