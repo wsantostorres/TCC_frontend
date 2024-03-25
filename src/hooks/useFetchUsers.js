@@ -20,8 +20,7 @@ export const useFetchUsers = () => {
       body: JSON.stringify(data)
     })
 
-    const dataUserSIMT = response.json();
-    return dataUserSIMT;
+    return response;
   }, [url])
     
   const register = async (data) => {

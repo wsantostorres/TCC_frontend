@@ -64,7 +64,7 @@ export const AuthContextProvider = ({children}) => {
       // pegando dados do suap
       dataUserSuap = await getDataUserSuap(tokenApiSuap.access);
 
-      // impedindo alunos sem vínculo de logar
+      // impedindo usuários sem vínculo de logar
       if(dataUserSuap.bondType === "Nenhum"){
         setError("Você não possui mais vínculo com o instituto")
         setLoading(false)
@@ -72,7 +72,15 @@ export const AuthContextProvider = ({children}) => {
       }
 
       // pegando dados do aluno/servidor se ele tiver cadastrado ou a id presente no token do SUAP
-      responseDataSimt = await getDataUserSimt(tokenApiSuap.access, dataUserSuap.bondType);
+      responseDataSimt = await getDataUserSimt(tokenApiSuap.access, "Servidor");
+
+      if(responseDataSimt.status === 401){
+        setError("Você não é autorizado.")
+        setLoading(false)
+        return;
+      }
+  
+      responseDataSimt = await responseDataSimt.json();
       
       // cadastrando e setando states do usuário
       if(responseDataSimt.created === false){
@@ -96,6 +104,7 @@ export const AuthContextProvider = ({children}) => {
         setCourseName(userCreated.courseName)
         
       }else{
+
         localStorage.setItem("tokenSUAP", JSON.stringify(tokenApiSuap))
         setTokenSuap(tokenApiSuap)
         setId(responseDataSimt.id)
@@ -105,8 +114,8 @@ export const AuthContextProvider = ({children}) => {
         setCourseName(responseDataSimt.courseName)
         setResumeId(responseDataSimt.resumeId)
         setStudentVacancies(responseDataSimt.vacanciesIds)
-      }
 
+      }
 
     } catch (error) {
       setError("Não foi possível estabelecer conexão com o servidor.")
@@ -127,6 +136,7 @@ export const AuthContextProvider = ({children}) => {
     setCourseName("")
     setResumeId(null)
     setStudentVacancies(null)
+    setError("")
     window.history.pushState("", "", "/");
   }
 
@@ -143,7 +153,8 @@ export const AuthContextProvider = ({children}) => {
 
               if(statusVerifyToken === 200){
                 const dataUserSuap = await getDataUserSuap(tokenSuapStoraged.access);
-                const dataUserSIMT = await getDataUserSimt(tokenSuapStoraged.access, dataUserSuap.bondType);
+                const requestUserSIMT = await getDataUserSimt(tokenSuapStoraged.access, dataUserSuap.bondType);
+                const dataUserSIMT = await requestUserSIMT.json();
             
                 setId(dataUserSIMT.id);
                 setTokenSuap(tokenSuapStoraged);
@@ -177,7 +188,8 @@ export const AuthContextProvider = ({children}) => {
                   setTokenSuap(newToken);
                   
                   const refreshedDataUserSuap = await getDataUserSuap(newToken.access);
-                  const refreshedDataUserSIMT = await getDataUserSimt(newToken.access, refreshedDataUserSuap.bondType);
+                  const requestUserSIMT = await getDataUserSimt(newToken.access, refreshedDataUserSuap.bondType);
+                  const refreshedDataUserSIMT = await requestUserSIMT.json();
           
                   setId(refreshedDataUserSIMT.id);
                   setName(refreshedDataUserSIMT.fullName);

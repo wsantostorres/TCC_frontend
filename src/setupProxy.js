@@ -3,8 +3,6 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 
-console.log('TOKEN_BASIC:', process.env.TOKEN_BASIC);
-
 // middleware
 const addAuthorizationHeader = (req, res, next) => {
     req.headers['Authorization'] = `Basic ${process.env.TOKEN_BASIC}`;
@@ -20,7 +18,7 @@ module.exports = function(app) {
     app.use(
         '/api/auth/get-data',
         createProxyMiddleware({
-            target: 'http://localhost:8080',
+            target: process.env.REACT_APP_BACKEND_URL,
             changeOrigin: true,
             pathRewrite: {
             '^/api/auth/get-data': '/auth/get-data',
@@ -32,7 +30,7 @@ module.exports = function(app) {
     app.use(
         '/api/auth/register',
         createProxyMiddleware({
-            target: 'http://localhost:8080',
+            target: process.env.REACT_APP_BACKEND_URL,
             changeOrigin: true,
             pathRewrite: {
             '^/api/auth/register': '/auth/register',
@@ -44,7 +42,7 @@ module.exports = function(app) {
     app.use(
         '/api/vacancies',
         createProxyMiddleware({
-            target: 'http://localhost:8080',
+            target: process.env.REACT_APP_BACKEND_URL,
             changeOrigin: true,
             pathRewrite: {
             '^/api/vacancies': '/vacancies',
@@ -56,7 +54,7 @@ module.exports = function(app) {
     app.use(
         '/api/courses',
         createProxyMiddleware({
-            target: 'http://localhost:8080',
+            target: process.env.REACT_APP_BACKEND_URL,
             changeOrigin: true,
             pathRewrite: {
             '^/api/courses': '/courses',
@@ -68,7 +66,7 @@ module.exports = function(app) {
     app.use(
         '/api/resumes',
         createProxyMiddleware({
-            target: 'http://localhost:8080',
+            target: process.env.REACT_APP_BACKEND_URL,
             changeOrigin: true,
             pathRewrite: {
             '^/api/resumes': '/resumes',
