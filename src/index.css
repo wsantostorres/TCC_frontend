@@ -22,3 +22,7 @@ button, input{
 form > div {
   margin: 1.125em 0;
 }
+
+.obrigatorio{
+  color: #ff0000;
+}

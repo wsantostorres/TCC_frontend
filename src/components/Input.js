@@ -1,7 +1,11 @@
-const Input = ({ name, type, placeholder, handleChange, valueLabel, value, messageError, validationClass }) => {
+const Input = ({ name, type, placeholder, handleChange, valueLabel, value, messageError, validationClass, required }) => {
   return (
     <div>
+      { required ? (
+        <label htmlFor={name} data-toggle="tooltip" data-placement="top" title="Este campo é obrigatório">{valueLabel}<span className="obrigatorio">*</span></label>
+      ): (
         <label htmlFor={name}>{valueLabel}</label>
+      )}
         <input className={`form-control ${validationClass}`}
         name={name} 
         id={name} 

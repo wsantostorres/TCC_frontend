@@ -154,13 +154,16 @@ const Resume = () => {
                 type="email" 
                 placeholder="Digite seu endereço de email" 
                 handleChange={(e) => handleOnChange(e, resume, setResume)}
-                valueLabel="Email: " 
+                valueLabel="Email:"
+                required={true} 
                 value={resume.contact.email} 
                 messageError={validation && validation.email}   
                 validationClass={validation && validation.email ? 'is-invalid' : ''} />
           <br />
 
-          <label htmlFor="phoneNumber">Nº Telefone:</label>
+          
+
+          <label htmlFor="phoneNumber" data-toggle="tooltip" data-placement="top" title="Este campo é obrigatório">Nº Telefone:<span className="obrigatorio">*</span></label>
           <InputMask mask="(99) 99999-9999"
                 name="contact.phone"
                 type="text"
@@ -187,8 +190,9 @@ const Resume = () => {
           <Input name="address.street"
                 type="text" 
                 placeholder="Nome da Rua" 
+                required={true} 
                 handleChange={(e) => handleOnChange(e, resume, setResume)}
-                valueLabel="Rua: " 
+                valueLabel="Rua:" 
                 value={resume.address.street} 
                 messageError={validation && validation.street}   
                 validationClass={validation && validation.street ? 'is-invalid' : ''} />
@@ -197,18 +201,20 @@ const Resume = () => {
           <Input name="address.number"
                 type="number" 
                 placeholder="Nº da Casa" 
+                required={true} 
                 handleChange={(e) => handleOnChange(e, resume, setResume)}
-                valueLabel="Número: " 
+                valueLabel="Número:" 
                 value={resume.address.number} 
                 messageError={validation && validation.number}  
                 validationClass={validation && validation.number ? 'is-invalid' : ''} />
           <br />
 
           <Input name="address.city"
+                required={true} 
                 type="text" 
                 placeholder="Sua cidade" 
                 handleChange={(e) => handleOnChange(e, resume, setResume)}
-                valueLabel="Cidade: " 
+                valueLabel="Cidade:" 
                 value={resume.address.city} 
                 messageError={validation && validation.city} 
                 validationClass={validation && validation.city ? 'is-invalid' : ''} />
@@ -253,7 +259,7 @@ const Resume = () => {
 
         <div>
           <h5 className="fw-bold"><span>4</span>Formações Acadêmicas</h5>
-          <p className={styles.description}><small><span>Descrição:</span> Formação Acadêmica em um currículo refere-se à educação formal que você recebeu ao longo de sua vida acadêmica, você pode adicionar até <span>(2)</span> formações. Observação: Se você ainda não terminou a sua formação, é interessante inserir-la e adicionar o ano de formação previsto. Exemplo: <em>"Ensino Médio" - "IFRN" - "2024" - "2028" </em></small></p>
+          <p className={styles.description}><small><span>Descrição:</span> Formação Acadêmica em um currículo refere-se à educação formal que você recebeu ao longo de sua vida acadêmica, você pode adicionar até <span>(2)</span> formações. Observação: Se você ainda não terminou a sua formação, é interessante adicioná-la e inserir o ano de formação previsto. Exemplo: <em>"Ensino Médio" - "IFRN" - "2024" - "2028" </em></small></p>
           {academics.map((academic, index) => { 
             if(academic.delete === false){
               return (
@@ -555,7 +561,7 @@ const Resume = () => {
         </div>
 
         <div className="d-flex justify-content-end mt-5 gap-3">
-          <button id="btn-download-my-resume" className="btn btn-warning px-3" onClick={async() => { await downloadResumePDF(studentId, resumeId) }} data-toggle="tooltip" data-placement="top" title="Baixar currículo"><FiDownloadCloud/><span></span></button>
+          <button id="btn-download-my-resume" className="btn btn-warning px-3" onClick={async() => { await downloadResumePDF(studentId, resumeId) }} data-toggle="tooltip" data-placement="top" title="Baixar currículo"><FiDownloadCloud/><span> Baixar</span></button>
           <button id="btn-save-resume" type="submit" className={styles.buttonSave}><LuSave /> Salvar</button>
         </div>
       </form>
