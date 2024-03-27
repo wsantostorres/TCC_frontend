@@ -72,7 +72,7 @@ export const AuthContextProvider = ({children}) => {
       }
 
       // pegando dados do aluno/servidor se ele tiver cadastrado ou a id presente no token do SUAP
-      responseDataSimt = await getDataUserSimt(tokenApiSuap.access, "Servidor");
+      responseDataSimt = await getDataUserSimt(tokenApiSuap.access, dataUserSuap.bondType);
 
       if(responseDataSimt.status === 401){
         setError("Você não é autorizado.")
