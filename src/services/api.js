@@ -1,7 +1,9 @@
 export const apiSimt = () => {
-  const urlSIMT = "http://localhost:3000/api";
+  const urlSIMT = "https://localhost:8080";
   return urlSIMT;
 }
+
+export const TOKEN_BASIC = "Basic c2ltdDIwMjQ6JkhCJG9iVkw4MiRtaCVXY1ZCbk02eQ";
 
 export const apiSuap = () => {
   const urlSUAP = "https://suap.ifrn.edu.br";

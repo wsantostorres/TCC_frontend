@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom"
 
 import { useMessage } from "../contexts/MessageContext";
 
-import { apiSimt } from "../services/api"
+import { apiSimt, TOKEN_BASIC } from "../services/api"
 import { useAuth } from "../contexts/AuthContext";
 
 export const useFetchVacancies = () => {
@@ -33,12 +33,14 @@ export const useFetchVacancies = () => {
       headersToFetch = {
         'bondType': data.bondType,
         'Content-Type': 'application/json',
+        "Authorization": TOKEN_BASIC
       }
     }else{
       headersToFetch = {
         'bondType': data.bondType,
         'courseId': data.courseId,
         'Content-Type': 'application/json',
+        "Authorization": TOKEN_BASIC
       }
     }
 
@@ -72,12 +74,14 @@ export const useFetchVacancies = () => {
       headersToFetch = {
         'bondType': data.bondType,
         'Content-Type': 'application/json',
+        "Authorization": TOKEN_BASIC
       }
     }else{
       headersToFetch = {
         'bondType': data.bondType,
         'courseId': data.courseId,
         'Content-Type': 'application/json',
+        "Authorization": TOKEN_BASIC
       }
     }
 
@@ -109,7 +113,8 @@ export const useFetchVacancies = () => {
     return fetch(`${url}/vacancies/${id}`, {
       method: "GET",
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        "Authorization": TOKEN_BASIC
       }
     })
     .then((response) => {
@@ -137,7 +142,8 @@ export const useFetchVacancies = () => {
     return fetch(`${url}/vacancies`, {
       method: "POST",
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        "Authorization": TOKEN_BASIC
       },
       body: JSON.stringify(data)
     })
@@ -166,7 +172,8 @@ export const useFetchVacancies = () => {
     return fetch(`${url}/vacancies/${id}`, {
       method: "PUT",
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        "Authorization": TOKEN_BASIC
       },
       body: JSON.stringify(data)
     })
@@ -195,7 +202,8 @@ export const useFetchVacancies = () => {
       await fetch(`${url}/vacancies/${id}`, {
         method: "PATCH",
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          "Authorization": TOKEN_BASIC
         },
         body: JSON.stringify(data)
       }).then((response) => {
@@ -217,6 +225,7 @@ export const useFetchVacancies = () => {
     return fetch(`${url}/vacancies/send-resume/${studentId}/${vacancyId}`, {
       method: "POST",
       headers: {
+        "Authorization": TOKEN_BASIC
       }
     }
     )
@@ -254,7 +263,7 @@ export const useFetchVacancies = () => {
     return fetch(`${url}/vacancies/download-resumes/${id}`, {
         method: 'GET',
         headers: {
-
+          "Authorization": TOKEN_BASIC
         },
         responseType: 'arraybuffer',
     }).then(async (response) => {

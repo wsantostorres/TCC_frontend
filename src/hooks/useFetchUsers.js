@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import { apiSimt } from "../services/api"
+import { apiSimt, TOKEN_BASIC } from "../services/api"
 
 export const useFetchUsers = () => {
 
@@ -16,6 +16,7 @@ export const useFetchUsers = () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": TOKEN_BASIC
       },
       body: JSON.stringify(data)
     })
@@ -29,6 +30,7 @@ export const useFetchUsers = () => {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
+            "Authorization": TOKEN_BASIC
         },
         body: JSON.stringify(data)
       })

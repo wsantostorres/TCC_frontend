@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import { apiSimt } from "../services/api"
+import { apiSimt, TOKEN_BASIC } from "../services/api"
 import { useMessage } from "../contexts/MessageContext";
 import { useAuth } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
@@ -22,7 +22,8 @@ export const useFetchResumes = () => {
         return fetch(`${url}/resumes/${studentId}/${id}`, {
           method: "GET",
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            "Authorization": TOKEN_BASIC
           }
         })
         .then((response) => {
@@ -51,7 +52,8 @@ export const useFetchResumes = () => {
       return fetch(`${url}/resumes/${studentId}`, {
         method: "POST",
         headers: { 
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          "Authorization": TOKEN_BASIC
         },
         body: JSON.stringify(data)
       })
@@ -80,7 +82,8 @@ export const useFetchResumes = () => {
       return fetch(`${url}/resumes/${studentId}/${resumeId}`, {
         method: "PUT",
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          "Authorization": TOKEN_BASIC
         },
         body: JSON.stringify(data)
       })
@@ -104,6 +107,9 @@ export const useFetchResumes = () => {
       return fetch(`${url}/resumes/download/${studentId}/${resumeId}`, {
           method: 'GET',
           responseType: 'arraybuffer',
+          headers: {
+            "Authorization": TOKEN_BASIC
+          }
       }).then(async (response) => {
         if(response.status === 200){
           let data = await response.arrayBuffer();
