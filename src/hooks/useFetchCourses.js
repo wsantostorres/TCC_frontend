@@ -2,7 +2,7 @@ import { useCallback, useState } from "react";
 
 import { useMessage } from "../contexts/MessageContext";
 
-import { apiSimt, TOKEN_BASIC } from "../services/api"
+import { apiSimt } from "../services/api"
 
 export const useFetchCourses = () => {
     const url = apiSimt();
@@ -16,7 +16,6 @@ export const useFetchCourses = () => {
           method: "GET",
           headers: {
             'Content-Type': 'application/json',
-            "Authorization": TOKEN_BASIC
           }
         })
         .then( async (response) => {
